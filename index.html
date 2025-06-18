@@ -23,6 +23,7 @@
       max-width: 480px;
       width: 100%;
       padding: 2rem;
+      position: relative;
     }
     h2 {
       text-align: center;
@@ -89,15 +90,16 @@
   <div class="card">
     <h2 id="form-title">Inscription XM Trading</h2>
 
+    <!-- Formulaire statique Netlify -->
     <form id="registration-form"
           name="inscription-xm"
           method="POST"
-          action="/"
           data-netlify="true"
+          action="/?success=true"
           netlify-honeypot="bot-field">
-      <!-- Hidden Netlify markers -->
+      <!-- Champ caché pour Netlify -->
       <input type="hidden" name="form-name" value="inscription-xm">
-      <p style="display:none">
+      <p style="display:none;">
         <label>Si vous êtes humain, ne remplissez pas <input name="bot-field"></label>
       </p>
 
@@ -160,6 +162,7 @@
       <button type="submit">Valider l’inscription</button>
     </form>
 
+    <!-- Message de félicitations -->
     <div id="thankyou">
       <h2>🎉 Félicitations, <span id="thx-nom"></span> !</h2>
       <p>
@@ -173,8 +176,8 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Auto-indicatif
-      const codes = { /* mêmes codes que précédemment */ 
+      // 1) Auto-remplissage de l’indicatif
+      const codes = {
         "Bénin":"+229","Burkina Faso":"+226","Cap-Vert":"+238","Côte d'Ivoire":"+225",
         "Gambie":"+220","Ghana":"+233","Guinée":"+224","Guinée-Bissau":"+245",
         "Libéria":"+231","Mali":"+223","Mauritanie":"+222","Niger":"+227",
@@ -183,34 +186,25 @@
         "RDC":"+243","Guinée équatoriale":"+240","Gabon":"+241","Sao Tomé-et-Principe":"+239",
         "Haïti":"+509","Madagascar":"+261"
       };
-      const paysEl = document.getElementById('pays'), dialEl = document.getElementById('dial-code');
+      const paysEl = document.getElementById('pays'),
+            dialEl = document.getElementById('dial-code');
       paysEl.addEventListener('change', () => dialEl.value = codes[paysEl.value] || '');
 
-      // 2. Soumission AJAX encodée x-www-form-urlencoded
-      const form = document.getElementById('registration-form');
-      form.addEventListener('submit', async e => {
-        e.preventDefault();
-        // encoder
-        const data = new URLSearchParams(new FormData(form)).toString();
-        try {
-          await fetch(form.action, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: data
-          });
-          // afficher remerciement
-          const fd = Object.fromEntries(new FormData(form));
-          document.getElementById('form-title').style.display = 'none';
-          form.style.display = 'none';
-          document.getElementById('thx-nom').innerText     = fd.prenom + ' ' + fd.nom;
-          document.getElementById('thx-montant').innerText = parseFloat(fd.montant).toLocaleString();
-          document.getElementById('thx-devise').innerText  = fd.devise;
-          document.getElementById('thankyou').style.display = 'block';
-        } catch (err) {
-          alert("Erreur lors de l'envoi, réessayez.");
-          console.error(err);
-        }
-      });
+      // 2) Si URL contient ?success=true → afficher merci
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('success') === 'true') {
+        // masquer form
+        document.getElementById('registration-form').style.display = 'none';
+        document.getElementById('form-title').style.display = 'none';
+        // remplir message
+        // on peut extraire via localStorage ou query params, mais Netlify ne renvoie pas les champs
+        // pour simplifier, on met un message générique :
+        document.getElementById('thx-nom').innerText = '';
+        document.getElementById('thx-montant').innerText = '';
+        document.getElementById('thx-devise').innerText = '';
+        // afficher
+        document.getElementById('thankyou').style.display = 'block';
+      }
     });
   </script>
 </body>
