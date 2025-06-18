@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    /* (Le style reste inchangé) */
+    /* Reset & base */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height:100%; width:100%; font-family:'Roboto',sans-serif; }
     body {
@@ -16,29 +16,60 @@
       background:linear-gradient(135deg,#1e3c72,#2a5298);
       color:#333;
     }
-    header, footer { background:#000; color:#fff; text-align:center; }
-    header { padding:1rem; font-weight:700; font-size:1.2rem; letter-spacing:1px; }
-    footer { padding:0.8rem; font-size:0.9rem; }
-    main { flex:1; display:flex; align-items:center; justify-content:center; padding:1rem; }
+
+    /* Header */
+    header {
+      background: url('entete.jpg') center center / cover no-repeat;
+      color:#fff;
+      padding:1rem; text-align:center;
+      font-weight:700; font-size:1.2rem; letter-spacing:1px;
+    }
+
+    /* Main */
+    main {
+      flex:1; display:flex;
+      align-items:center; justify-content:center;
+      padding:1rem;
+    }
+
+    /* Card */
     .card {
-      position:relative; background:rgba(255,255,255,0.95);
-      border-radius:16px; box-shadow:0 15px 35px rgba(0,0,0,0.15);
-      width:100%; max-width:480px; padding:2.5rem; overflow:hidden;
+      position:relative;
+      background:rgba(255,255,255,0.95);
+      border-radius:16px;
+      box-shadow:0 15px 35px rgba(0,0,0,0.15);
+      width:100%; max-width:480px;
+      padding:2.5rem; overflow:hidden;
       animation:fadeIn 0.8s ease-out;
     }
     h2 { text-align:center; margin-bottom:2rem; color:#1e3c72; font-size:1.8rem; }
+
+    /* Notification bubble */
     .notification {
-      position:relative; height:2rem; margin-bottom:1.5rem;
-      overflow:hidden; font-weight:500; text-align:center;
-      color:#1e3c72; font-size:0.95rem;
+      position:relative;
+      height:2rem;
+      margin-bottom:1.5rem;
+      overflow:hidden;
+      font-weight:500;
+      text-align:center;
+      color:#1e3c72;
+      font-size:0.95rem;
     }
     .notification p {
       position:absolute; width:100%;
       transform: translateY(100%);
       animation:slide-in 0.6s forwards;
     }
-    @keyframes slide-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
-    @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes slide-in {
+      from { transform: translateY(100%); }
+      to   { transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* Form controls */
     label { display:block; margin-top:1.2rem; font-weight:500; font-size:0.95rem; }
     input, select, button {
       width:100%; padding:0.85rem 1rem; margin-top:0.3rem;
@@ -46,8 +77,10 @@
       font-size:1rem; transition:all 0.3s ease;
     }
     input:focus, select:focus {
-      border-color:#1e3c72; box-shadow:0 0 0 4px rgba(30,60,114,0.15); outline:none;
+      border-color:#1e3c72; box-shadow:0 0 0 4px rgba(30,60,114,0.15);
+      outline:none;
     }
+
     .phone-group { display:flex; gap:0.5rem; }
     .dial-code {
       flex:0 0 5rem; text-align:center; background:#f5f5f5;
@@ -56,6 +89,7 @@
     .phone-group input[type="tel"] {
       flex:1; border-top-left-radius:0; border-bottom-left-radius:0;
     }
+
     button {
       background:linear-gradient(135deg,#1e3c72,#2a5298);
       color:#fff; border:none; margin-top:1.8rem;
@@ -64,9 +98,12 @@
       transition:transform 0.2s;
     }
     button:hover { transform:translateY(-2px); }
+
+    /* Félicitations */
     #thankyou {
       display:none; padding:2rem 1rem;
-      animation:fadeIn 0.6s ease-out; text-align:center;
+      animation:fadeIn 0.6s ease-out;
+      text-align:center;
     }
     #thankyou h2 {
       display:inline-block; text-align:left;
@@ -74,8 +111,19 @@
       color:#1e3c72; margin-bottom:1rem; font-size:1.6rem;
     }
     #thankyou p { line-height:1.5; font-size:1rem; }
+
+    /* Footer */
+    footer {
+      background:#000; color:#fff;
+      text-align:center; padding:0.8rem; font-size:0.9rem;
+    }
+
+    /* Mobile fullscreen */
     @media(max-width:600px) {
-      .card { border-radius:0; height:100%; max-width:none; padding:2rem 1.5rem; box-shadow:none; }
+      .card {
+        border-radius:0; height:100%; max-width:none;
+        padding:2rem 1.5rem; box-shadow:none;
+      }
       h2 { font-size:1.6rem; }
       button { font-size:0.95rem; }
     }
@@ -102,7 +150,6 @@
       >
         <!-- honeypot -->
         <p hidden><label>Ne pas remplir : <input name="bot-field" /></label></p>
-        <!-- nom du form pour Netlify -->
         <input type="hidden" name="form-name" value="registration">
 
         <!-- Nom -->
@@ -126,7 +173,26 @@
         <label for="pays">Pays</label>
         <select id="pays" name="pays" required>
           <option value="" disabled selected>Choisissez votre pays</option>
-          <!-- ... (tous vos optgroups inchangés) ... -->
+          <optgroup label="Afrique de l'Ouest">
+            <option value="Bénin">Bénin</option><option value="Burkina Faso">Burkina Faso</option>
+            <option value="Cap-Vert">Cap-Vert</option><option value="Côte d'Ivoire">Côte d'Ivoire</option>
+            <option value="Gambie">Gambie</option><option value="Ghana">Ghana</option>
+            <option value="Guinée">Guinée</option><option value="Guinée-Bissau">Guinée-Bissau</option>
+            <option value="Libéria">Libéria</option><option value="Mali">Mali</option>
+            <option value="Mauritanie">Mauritanie</option><option value="Niger">Niger</option>
+            <option value="Nigéria">Nigéria</option><option value="Sénégal">Sénégal</option>
+            <option value="Sierra Leone">Sierra Leone</option><option value="Togo">Togo</option>
+          </optgroup>
+          <optgroup label="Afrique centrale">
+            <option value="Cameroun">Cameroun</option><option value="Centrafrique">Centrafrique</option>
+            <option value="Tchad">Tchad</option><option value="Congo">Congo</option>
+            <option value="RDC">RDC</option><option value="Guinée équatoriale">Guinée équatoriale</option>
+            <option value="Gabon">Gabon</option><option value="Sao Tomé-et-Principe">Sao Tomé-et-Principe</option>
+          </optgroup>
+          <optgroup label="Outre-mer & autres">
+            <option value="Haïti">Haïti</option><option value="Madagascar">Madagascar</option>
+            <option value="France">France</option><option value="États-Unis">États-Unis</option>
+          </optgroup>
         </select>
 
         <!-- Téléphone -->
@@ -180,41 +246,52 @@
 
   <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // 1) indicatifs & longueurs
-    const countryInfo = { /* ... inchangé ... */ },
-          paysEl = document.getElementById('pays'),
+    // 1) Mapping indicatifs + longueurs
+    const countryInfo = {
+      "Bénin": ["+229", 8], "Burkina Faso": ["+226",8], "Cap-Vert": ["+238",7],
+      "Côte d'Ivoire": ["+225",8], "Gambie": ["+220",7], "Ghana": ["+233",9],
+      "Guinée": ["+224",9], "Guinée-Bissau": ["+245",7], "Libéria": ["+231",7],
+      "Mali": ["+223",8], "Mauritanie": ["+222",8], "Niger": ["+227",8],
+      "Nigéria": ["+234",10], "Sénégal": ["+221",9], "Sierra Leone": ["+232",8],
+      "Togo": ["+228",8], "Cameroun": ["+237",9], "Centrafrique": ["+236",8],
+      "Tchad": ["+235",8], "Congo": ["+242",9], "RDC": ["+243",9],
+      "Guinée équatoriale": ["+240",9], "Gabon": ["+241",9],
+      "Sao Tomé-et-Principe": ["+239",7], "Haïti": ["+509",8],
+      "Madagascar": ["+261",10], "France": ["+33",9], "États-Unis": ["+1",10]
+    };
+    const paysEl = document.getElementById('pays'),
           dialEl = document.getElementById('dial-code'),
           phoneEl = document.getElementById('phone');
     paysEl.addEventListener('change', () => {
-      const info = countryInfo[paysEl.value] || ["",15];
+      const info = countryInfo[paysEl.value] || ["", 15];
       dialEl.value = info[0];
       phoneEl.maxLength = info[1];
     });
 
-    // 2) notifications (fcfa 300 000–5 000 000 ; $ 400–10 000)
+    // 2) Notification bubble (fcfa 300 000–5 000 000 ; $ 400–10 000)
     const names = ["Jean","Yann","Amélie","Fatou","Omar","Luc","Nadia","Sophie","Koffi","Mariama"];
     let namePool = [...names];
     function getRandomMessage() {
       if (!namePool.length) namePool = [...names];
-      const name = namePool.splice(Math.floor(Math.random()*namePool.length),1)[0];
+      const name = namePool.splice(Math.floor(Math.random() * namePool.length), 1)[0];
       const isUSD = Math.random() < 0.5;
       const amount = isUSD
-        ? Math.floor(Math.random()*(10000-400+1)+400)
-        : Math.floor(Math.random()*(5000000-300000+1)+300000);
+        ? Math.floor(Math.random() * (10000 - 400 + 1) + 400)
+        : Math.floor(Math.random() * (5000000 - 300000 + 1) + 300000);
       const currency = isUSD ? '$' : ' fcfa';
       return `🎉 ${name} vient de retirer ${amount}${currency}`;
     }
-    const notif = document.getElementById('notif');
+    const notifContainer = document.getElementById('notif');
     function showNotif() {
-      notif.innerHTML = '';
+      notifContainer.innerHTML = '';
       const p = document.createElement('p');
       p.textContent = getRandomMessage();
-      notif.appendChild(p);
+      notifContainer.appendChild(p);
     }
     showNotif();
-    setInterval(showNotif,4000);
+    setInterval(showNotif, 4000);
 
-    // 3) stockage du nom/montant/devise/sexe + gestion affichage "merci"
+    // 3) Formulaire + Netlify + stockage du sexe
     const form = document.getElementById('registration-form'),
           params = new URLSearchParams(window.location.search);
 
@@ -234,7 +311,6 @@
       document.getElementById('thx-devise').innerText  = devise;
     } else {
       form.addEventListener('submit', () => {
-        // on stocke, puis Netlify gère le POST automatiquement (pas de preventDefault)
         localStorage.setItem('nom', document.getElementById('nom').value);
         localStorage.setItem('montant', document.getElementById('montant').value);
         localStorage.setItem('devise', document.getElementById('devise').value);
