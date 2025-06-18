@@ -6,11 +6,10 @@
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    /* Reset basique */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -24,7 +23,6 @@
       max-width: 480px;
       width: 100%;
       padding: 2rem;
-      position: relative;
     }
     h2 {
       text-align: center;
@@ -32,13 +30,13 @@
       font-weight: 700;
       color: #1e3c72;
     }
-    form label {
+    label {
       display: block;
       margin-top: 1rem;
       font-weight: 500;
       color: #333;
     }
-    form input, form select, form button {
+    input, select, button {
       width: 100%;
       padding: 0.75rem 1rem;
       margin-top: 0.3rem;
@@ -47,23 +45,21 @@
       font-size: 1rem;
       transition: border-color .3s, box-shadow .3s;
     }
-    form input:focus, form select:focus {
+    input:focus, select:focus {
       border-color: #1e3c72;
-      box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.2);
+      box-shadow: 0 0 0 3px rgba(30,60,114,0.2);
       outline: none;
     }
     .phone-group {
       display: flex;
       gap: 0.5rem;
     }
-    .phone-group .dial-code {
+    .dial-code {
       flex: 0 0 4.5rem;
       text-align: center;
       background: #f0f0f0;
     }
-    .phone-group input[type="tel"] {
-      flex: 1;
-    }
+    .phone-group input[type="tel"] { flex: 1; }
     button {
       background: #1e3c72;
       color: #fff;
@@ -73,10 +69,9 @@
       font-weight: 500;
       transition: background .3s;
     }
-    button:hover {
-      background: #16325c;
-    }
-    /* Message de félicitations */
+    button:hover { background: #16325c; }
+
+    /* Félicitations */
     #thankyou {
       display: none;
       text-align: center;
@@ -87,17 +82,20 @@
       margin-bottom: 1rem;
       font-size: 1.5rem;
     }
-    #thankyou p {
-      color: #444;
-      line-height: 1.4;
-    }
+    #thankyou p { color: #444; line-height: 1.4; }
   </style>
 </head>
 <body>
-  <div class="card" id="form-card">
+  <div class="card">
     <h2 id="form-title">Inscription XM Trading</h2>
 
-    <form id="registration-form" name="inscription-xm" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <form id="registration-form"
+          name="inscription-xm"
+          method="POST"
+          action="/"
+          data-netlify="true"
+          netlify-honeypot="bot-field">
+      <!-- Hidden Netlify markers -->
       <input type="hidden" name="form-name" value="inscription-xm">
       <p style="display:none">
         <label>Si vous êtes humain, ne remplissez pas <input name="bot-field"></label>
@@ -113,24 +111,30 @@
       <select id="pays" name="pays" required>
         <option value="" disabled selected>Choisissez votre pays</option>
         <optgroup label="Afrique de l'Ouest">
-          <option>Bénin</option><option>Burkina Faso</option><option>Cap-Vert</option><option>Côte d'Ivoire</option>
-          <option>Gambie</option><option>Ghana</option><option>Guinée</option><option>Guinée-Bissau</option>
-          <option>Libéria</option><option>Mali</option><option>Mauritanie</option><option>Niger</option>
-          <option>Nigéria</option><option>Sénégal</option><option>Sierra Leone</option><option>Togo</option>
+          <option value="Bénin">Bénin</option><option value="Burkina Faso">Burkina Faso</option>
+          <option value="Cap-Vert">Cap-Vert</option><option value="Côte d'Ivoire">Côte d'Ivoire</option>
+          <option value="Gambie">Gambie</option><option value="Ghana">Ghana</option>
+          <option value="Guinée">Guinée</option><option value="Guinée-Bissau">Guinée-Bissau</option>
+          <option value="Libéria">Libéria</option><option value="Mali">Mali</option>
+          <option value="Mauritanie">Mauritanie</option><option value="Niger">Niger</option>
+          <option value="Nigéria">Nigéria</option><option value="Sénégal">Sénégal</option>
+          <option value="Sierra Leone">Sierra Leone</option><option value="Togo">Togo</option>
         </optgroup>
         <optgroup label="Afrique centrale">
-          <option>Cameroun</option><option>Centrafrique</option><option>Tchad</option><option>Congo</option>
-          <option>RDC</option><option>Guinée équatoriale</option><option>Gabon</option><option>Sao Tomé-et-Principe</option>
+          <option value="Cameroun">Cameroun</option><option value="Centrafrique">Centrafrique</option>
+          <option value="Tchad">Tchad</option><option value="Congo">Congo</option>
+          <option value="RDC">RDC</option><option value="Guinée équatoriale">Guinée équatoriale</option>
+          <option value="Gabon">Gabon</option><option value="Sao Tomé-et-Principe">Sao Tomé-et-Principe</option>
         </optgroup>
         <optgroup label="Autres">
-          <option>Haïti</option><option>Madagascar</option>
+          <option value="Haïti">Haïti</option><option value="Madagascar">Madagascar</option>
         </optgroup>
       </select>
 
       <label>Téléphone</label>
       <div class="phone-group">
         <input type="text" id="dial-code" name="dial-code" class="dial-code" readonly placeholder="+xxx">
-        <input type="tel" id="phone" name="phone" placeholder="Numéro de téléphone" required>
+        <input type="tel" id="phone" name="phone" placeholder="Numéro" required>
       </div>
 
       <label for="montant">Montant à investir</label>
@@ -169,8 +173,8 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Codes pays
-      const codes = {
+      // 1. Auto-indicatif
+      const codes = { /* mêmes codes que précédemment */ 
         "Bénin":"+229","Burkina Faso":"+226","Cap-Vert":"+238","Côte d'Ivoire":"+225",
         "Gambie":"+220","Ghana":"+233","Guinée":"+224","Guinée-Bissau":"+245",
         "Libéria":"+231","Mali":"+223","Mauritanie":"+222","Niger":"+227",
@@ -179,33 +183,31 @@
         "RDC":"+243","Guinée équatoriale":"+240","Gabon":"+241","Sao Tomé-et-Principe":"+239",
         "Haïti":"+509","Madagascar":"+261"
       };
-      const paysEl = document.getElementById('pays');
-      const dialEl = document.getElementById('dial-code');
-      paysEl.addEventListener('change', () => {
-        dialEl.value = codes[paysEl.value] || '';
-      });
+      const paysEl = document.getElementById('pays'), dialEl = document.getElementById('dial-code');
+      paysEl.addEventListener('change', () => dialEl.value = codes[paysEl.value] || '');
 
-      // Gestion du submit avec page de remerciement
+      // 2. Soumission AJAX encodée x-www-form-urlencoded
       const form = document.getElementById('registration-form');
       form.addEventListener('submit', async e => {
         e.preventDefault();
-        const formData = new FormData(form);
+        // encoder
+        const data = new URLSearchParams(new FormData(form)).toString();
         try {
-          await fetch('/', { method: 'POST', body: formData });
-          // Récupérer et afficher les infos
-          const prenom  = formData.get('prenom');
-          const nom     = formData.get('nom');
-          const montant = parseFloat(formData.get('montant')).toLocaleString();
-          const devise  = formData.get('devise');
-
+          await fetch(form.action, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: data
+          });
+          // afficher remerciement
+          const fd = Object.fromEntries(new FormData(form));
           document.getElementById('form-title').style.display = 'none';
           form.style.display = 'none';
-          document.getElementById('thx-nom').innerText     = prenom + ' ' + nom;
-          document.getElementById('thx-montant').innerText = montant;
-          document.getElementById('thx-devise').innerText  = devise;
+          document.getElementById('thx-nom').innerText     = fd.prenom + ' ' + fd.nom;
+          document.getElementById('thx-montant').innerText = parseFloat(fd.montant).toLocaleString();
+          document.getElementById('thx-devise').innerText  = fd.devise;
           document.getElementById('thankyou').style.display = 'block';
         } catch (err) {
-          alert("Une erreur est survenue, veuillez réessayer.");
+          alert("Erreur lors de l'envoi, réessayez.");
           console.error(err);
         }
       });
