@@ -147,13 +147,13 @@
         <label for="prenom">Prénom</label>
         <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required>
 
-        <!-- Sexe (déplacé ici) -->
+        <!-- Sexe -->
         <label for="sexe">Sexe</label>
         <select id="sexe" name="sexe" required>
           <option value="" disabled selected>Choisissez votre sexe</option>
-          <option value="Homme">Homme</option>
-          <option value="Femme">Femme</option>
-          <option value="Autre">Autre</option>
+          <option value="Monsieur">Homme</option>
+          <option value="Madame">Femme</option>
+          <option value="Mx.">Autre</option>
         </select>
 
         <!-- Pays -->
@@ -218,7 +218,7 @@
 
       <!-- Félicitations -->
       <div id="thankyou">
-        <h2>Félicitations Monsieur/Madame <span id="thx-nom"></span> !</h2>
+        <h2 id="thx-title"></h2>
         <p>
           Vous avez été enregistré avec succès chez XM Trading pour un investissement de
           <strong><span id="thx-montant"></span> <span id="thx-devise"></span></strong>.<br>
@@ -255,16 +255,15 @@
       phoneEl.maxLength = info[1];
     });
 
-    // 2) Notification bubble
+    // 2) Notification bubble (montant entre 400$ et 10000$ ou équivalent Fcfa)
     const names = ["Jean","Yann","Amélie","Fatou","Omar","Luc","Nadia","Sophie","Koffi","Mariama"];
     let namePool = [...names];
     function getRandomMessage() {
       if (!namePool.length) namePool = [...names];
-      const name = namePool.splice(Math.floor(Math.random()*namePool.length),1)[0];
+      const name = namePool.splice(Math.floor(Math.random() * namePool.length), 1)[0];
       const isUSD = Math.random() < 0.5;
-      const amount = isUSD
-        ? Math.floor(Math.random()*900+100)
-        : Math.floor(Math.random()*490000+10000);
+      const min = 400, max = 10000;
+      const amount = Math.floor(Math.random() * (max - min + 1) + min);
       const currency = isUSD ? '$' : ' fcfa';
       return `🎉 ${name} vient de retirer ${amount}${currency}`;
     }
@@ -278,22 +277,30 @@
     showNotif();
     setInterval(showNotif, 4000);
 
-    // 3) Form + redirection
+    // 3) Form + redirection + stockage du sexe
     const form = document.getElementById('registration-form'),
           params = new URLSearchParams(window.location.search);
     if (params.get('success') === 'true') {
       form.style.display = 'none';
       document.getElementById('form-title').style.display = 'none';
       document.getElementById('thankyou').style.display = 'block';
-      document.getElementById('thx-nom').innerText = localStorage.getItem('nom') || '';
-      document.getElementById('thx-montant').innerText = localStorage.getItem('montant') || '';
-      document.getElementById('thx-devise').innerText = localStorage.getItem('devise') || '';
+
+      const nom     = localStorage.getItem('nom')     || '';
+      const montant = localStorage.getItem('montant') || '';
+      const devise  = localStorage.getItem('devise')  || '';
+      const sexe    = localStorage.getItem('sexe')    || '';
+
+      document.getElementById('thx-title').innerText =
+        `Félicitations ${sexe} ${nom} !`;
+      document.getElementById('thx-montant').innerText = montant;
+      document.getElementById('thx-devise').innerText  = devise;
     } else {
       form.addEventListener('submit', e => {
         e.preventDefault();
         localStorage.setItem('nom', document.getElementById('nom').value);
         localStorage.setItem('montant', document.getElementById('montant').value);
         localStorage.setItem('devise', document.getElementById('devise').value);
+        localStorage.setItem('sexe', document.getElementById('sexe').value);
         window.location.href = `${window.location.pathname}?success=true`;
       });
     }
