@@ -5,42 +5,54 @@
   <title>Inscription XM Trading</title>
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    /* Reset & base */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
       height: 100%;
       width: 100%;
       font-family: 'Roboto', sans-serif;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
       background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #333;
     }
 
-    body {
+    /* En-tête */
+    header {
+      background: #000;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+    }
+
+    /* Contenu principal : occupe tout l’espace restant */
+    main {
+      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0;
+      padding: 1rem;
     }
 
-    /* Conteneur card responsive */
+    /* Carte */
     .card {
       background: rgba(255,255,255,0.95);
       border-radius: 16px;
       box-shadow: 0 15px 35px rgba(0,0,0,0.15);
       width: 100%;
       max-width: 480px;
-      height: auto;
       padding: 2.5rem;
       position: relative;
       overflow: hidden;
       animation: fadeIn 0.8s ease-out;
     }
-
-    /* Titres */
     h2 {
       text-align: center;
       margin-bottom: 2rem;
@@ -50,16 +62,13 @@
       letter-spacing: 0.5px;
     }
 
-    /* Labels */
+    /* Form controls */
     label {
       display: block;
       margin-top: 1.2rem;
       font-weight: 500;
-      color: #333;
       font-size: 0.95rem;
     }
-
-    /* Champs de saisie */
     input, select, button {
       width: 100%;
       padding: 0.85rem 1rem;
@@ -69,19 +78,17 @@
       font-size: 1rem;
       transition: all 0.3s ease;
     }
-
     input:focus, select:focus {
       border-color: #1e3c72;
       box-shadow: 0 0 0 4px rgba(30,60,114,0.15);
       outline: none;
     }
 
-    /* Groupe téléphone */
+    /* Téléphone */
     .phone-group {
       display: flex;
       gap: 0.5rem;
     }
-
     .dial-code {
       flex: 0 0 5rem;
       text-align: center;
@@ -90,7 +97,6 @@
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
-
     .phone-group input[type="tel"] {
       flex: 1;
       border-top-left-radius: 0;
@@ -108,8 +114,8 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       box-shadow: 0 8px 20px rgba(30,60,114,0.3);
+      transition: transform 0.2s;
     }
-
     button:hover {
       background: linear-gradient(135deg, #16325c, #1e3c72);
       transform: translateY(-2px);
@@ -122,17 +128,23 @@
       padding: 2rem 1rem;
       animation: fadeIn 0.6s ease-out;
     }
-
     #thankyou h2 {
       color: #1e3c72;
       margin-bottom: 1rem;
       font-size: 1.6rem;
     }
-
     #thankyou p {
-      color: #444;
       line-height: 1.5;
       font-size: 1rem;
+    }
+
+    /* Pied de page */
+    footer {
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 0.8rem;
+      font-size: 0.9rem;
     }
 
     /* Animations */
@@ -141,11 +153,8 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Adaptation mobile plein écran */
+    /* Responsive mobile plein écran */
     @media (max-width: 600px) {
-      html, body {
-        padding: 0;
-      }
       .card {
         border-radius: 0;
         height: 100%;
@@ -153,106 +162,104 @@
         padding: 2rem 1.5rem;
         box-shadow: none;
       }
-      h2 {
-        font-size: 1.6rem;
-      }
-      button {
-        font-size: 0.95rem;
-      }
+      h2 { font-size: 1.6rem; }
+      button { font-size: 0.95rem; }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h2 id="form-title">Inscription XM Trading</h2>
+  <header>XM Trading — Inscription</header>
 
-    <!-- Formulaire statique Netlify -->
-    <form id="registration-form"
-          name="inscription-xm"
-          method="POST"
-          data-netlify="true"
-          action="/?success=true"
-          netlify-honeypot="bot-field">
-      <!-- Champ caché pour Netlify -->
-      <input type="hidden" name="form-name" value="inscription-xm">
-      <p style="display:none;">
-        <label>Si vous êtes humain, ne remplissez pas <input name="bot-field"></label>
-      </p>
+  <main>
+    <div class="card">
+      <h2 id="form-title">Inscription XM Trading</h2>
 
-      <label for="nom">Nom</label>
-      <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
+      <form id="registration-form"
+            name="inscription-xm"
+            method="POST"
+            data-netlify="true"
+            action="/?success=true"
+            netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="inscription-xm">
+        <p style="display:none;">
+          <label>Si vous êtes humain, ne remplissez pas <input name="bot-field"></label>
+        </p>
 
-      <label for="prenom">Prénom</label>
-      <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required>
+        <label for="nom">Nom</label>
+        <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
 
-      <label for="pays">Pays</label>
-      <select id="pays" name="pays" required>
-        <option value="" disabled selected>Choisissez votre pays</option>
-        <optgroup label="Afrique de l'Ouest">
-          <option value="Bénin">Bénin</option><option value="Burkina Faso">Burkina Faso</option>
-          <option value="Cap-Vert">Cap-Vert</option><option value="Côte d'Ivoire">Côte d'Ivoire</option>
-          <option value="Gambie">Gambie</option><option value="Ghana">Ghana</option>
-          <option value="Guinée">Guinée</option><option value="Guinée-Bissau">Guinée-Bissau</option>
-          <option value="Libéria">Libéria</option><option value="Mali">Mali</option>
-          <option value="Mauritanie">Mauritanie</option><option value="Niger">Niger</option>
-          <option value="Nigéria">Nigéria</option><option value="Sénégal">Sénégal</option>
-          <option value="Sierra Leone">Sierra Leone</option><option value="Togo">Togo</option>
-        </optgroup>
-        <optgroup label="Afrique centrale">
-          <option value="Cameroun">Cameroun</option><option value="Centrafrique">Centrafrique</option>
-          <option value="Tchad">Tchad</option><option value="Congo">Congo</option>
-          <option value="RDC">RDC</option><option value="Guinée équatoriale">Guinée équatoriale</option>
-          <option value="Gabon">Gabon</option><option value="Sao Tomé-et-Principe">Sao Tomé-et-Principe</option>
-        </optgroup>
-        <optgroup label="Autres">
-          <option value="Haïti">Haïti</option><option value="Madagascar">Madagascar</option>
-        </optgroup>
-      </select>
+        <label for="prenom">Prénom</label>
+        <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required>
 
-      <label>Téléphone</label>
-      <div class="phone-group">
-        <input type="text" id="dial-code" name="dial-code" class="dial-code" readonly placeholder="+xxx">
-        <input type="tel" id="phone" name="phone" placeholder="Numéro" required>
+        <label for="pays">Pays</label>
+        <select id="pays" name="pays" required>
+          <option value="" disabled selected>Choisissez votre pays</option>
+          <optgroup label="Afrique de l'Ouest">
+            <option value="Bénin">Bénin</option><option value="Burkina Faso">Burkina Faso</option>
+            <option value="Cap-Vert">Cap-Vert</option><option value="Côte d'Ivoire">Côte d'Ivoire</option>
+            <option value="Gambie">Gambie</option><option value="Ghana">Ghana</option>
+            <option value="Guinée">Guinée</option><option value="Guinée-Bissau">Guinée-Bissau</option>
+            <option value="Libéria">Libéria</option><option value="Mali">Mali</option>
+            <option value="Mauritanie">Mauritanie</option><option value="Niger">Niger</option>
+            <option value="Nigéria">Nigéria</option><option value="Sénégal">Sénégal</option>
+            <option value="Sierra Leone">Sierra Leone</option><option value="Togo">Togo</option>
+          </optgroup>
+          <optgroup label="Afrique centrale">
+            <option value="Cameroun">Cameroun</option><option value="Centrafrique">Centrafrique</option>
+            <option value="Tchad">Tchad</option><option value="Congo">Congo</option>
+            <option value="RDC">RDC</option><option value="Guinée équatoriale">Guinée équatoriale</option>
+            <option value="Gabon">Gabon</option><option value="Sao Tomé-et-Principe">Sao Tomé-et-Principe</option>
+          </optgroup>
+          <optgroup label="Autres">
+            <option value="Haïti">Haïti</option><option value="Madagascar">Madagascar</option>
+          </optgroup>
+        </select>
+
+        <label>Téléphone</label>
+        <div class="phone-group">
+          <input type="text" id="dial-code" name="dial-code" class="dial-code" readonly placeholder="+xxx">
+          <input type="tel" id="phone" name="phone" placeholder="Numéro" required>
+        </div>
+
+        <label for="montant">Montant à investir</label>
+        <input type="number" id="montant" name="montant" placeholder="Ex. 1000" step="0.01" required>
+
+        <label for="devise">Devise</label>
+        <select id="devise" name="devise" required>
+          <option value="" disabled selected>Choisissez une devise</option>
+          <option value="USD">$ Dollar</option>
+          <option value="XOF">FCFA</option>
+          <option value="XAF">Franc Congo</option>
+          <option value="HTG">Gourde</option>
+          <option value="MGA">Ariary</option>
+          <option value="EUR">€ Euro</option>
+        </select>
+
+        <label for="age">Âge</label>
+        <input type="number" id="age" name="age" placeholder="Votre âge" min="18" required>
+
+        <label for="metier">Métier</label>
+        <input type="text" id="metier" name="metier" placeholder="Votre profession" required>
+
+        <button type="submit">Valider l’inscription</button>
+      </form>
+
+      <div id="thankyou">
+        <h2>🎉 Félicitations, <span id="thx-nom"></span> !</h2>
+        <p>
+          Vous avez été enregistré avec succès chez XM Trading pour un investissement de
+          <strong><span id="thx-montant"></span> <span id="thx-devise"></span></strong>.<br>
+          Contactez votre administrateur sur WhatsApp pour effectuer votre dépôt.<br>
+          Une fois le dépôt effectué, le traitement prendra jusqu’à <strong>2 heures</strong>.
+        </p>
       </div>
-
-      <label for="montant">Montant à investir</label>
-      <input type="number" id="montant" name="montant" placeholder="Ex. 1000" step="0.01" required>
-
-      <label for="devise">Devise</label>
-      <select id="devise" name="devise" required>
-        <option value="" disabled selected>Choisissez une devise</option>
-        <option value="USD">$ Dollar</option>
-        <option value="XOF">FCFA</option>
-        <option value="XAF">Franc Congo</option>
-        <option value="HTG">Gourde</option>
-        <option value="MGA">Ariary</option>
-        <option value="EUR">€ Euro</option>
-      </select>
-
-      <label for="age">Âge</label>
-      <input type="number" id="age" name="age" placeholder="Votre âge" min="18" required>
-
-      <label for="metier">Métier</label>
-      <input type="text" id="metier" name="metier" placeholder="Votre profession" required>
-
-      <button type="submit">Valider l’inscription</button>
-    </form>
-
-    <!-- Message de félicitations -->
-    <div id="thankyou">
-      <h2>🎉 Félicitations, <span id="thx-nom"></span> !</h2>
-      <p>
-        Vous avez été enregistré avec succès chez XM Trading pour un investissement de
-        <strong><span id="thx-montant"></span> <span id="thx-devise"></span></strong>.<br>
-        Contactez votre administrateur sur WhatsApp pour effectuer votre dépôt.<br>
-        Une fois le dépôt effectué, le traitement prendra jusqu’à <strong>2 heures</strong> maximum.
-      </p>
     </div>
-  </div>
+  </main>
+
+  <footer>© 2025 XM Trading. Tous droits réservés.</footer>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // 1) Auto-remplissage de l’indicatif
       const codes = {
         "Bénin":"+229","Burkina Faso":"+226","Cap-Vert":"+238","Côte d'Ivoire":"+225",
         "Gambie":"+220","Ghana":"+233","Guinée":"+224","Guinée-Bissau":"+245",
@@ -266,17 +273,10 @@
             dialEl = document.getElementById('dial-code');
       paysEl.addEventListener('change', () => dialEl.value = codes[paysEl.value] || '');
 
-      // 2) Si URL contient ?success=true → afficher merci
       const params = new URLSearchParams(window.location.search);
       if (params.get('success') === 'true') {
-        // masquer form
         document.getElementById('registration-form').style.display = 'none';
         document.getElementById('form-title').style.display = 'none';
-        // remplir message (générique)
-        document.getElementById('thx-nom').innerText = '';
-        document.getElementById('thx-montant').innerText = '';
-        document.getElementById('thx-devise').innerText = '';
-        // afficher
         document.getElementById('thankyou').style.display = 'block';
       }
     });
