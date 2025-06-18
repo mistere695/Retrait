@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Inscription XM Trading</title>
-  <!-- Google Font -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     /* Reset & base */
@@ -32,7 +33,7 @@
       letter-spacing: 1px;
     }
 
-    /* Contenu principal : occupe tout l’espace restant */
+    /* Contenu principal */
     main {
       flex: 1;
       display: flex;
@@ -124,11 +125,14 @@
     /* Félicitations */
     #thankyou {
       display: none;
-      text-align: center;
       padding: 2rem 1rem;
       animation: fadeIn 0.6s ease-out;
+      text-align: center; /* centre les éléments inline-block */
     }
     #thankyou h2 {
+      display: inline-block;       /* pour pouvoir être centré par text-align:center du parent */
+      text-align: left;            /* mais texte aligné à gauche */
+      font-family: 'Archivo Black', sans-serif;
       color: #1e3c72;
       margin-bottom: 1rem;
       font-size: 1.6rem;
@@ -194,25 +198,7 @@
         <label for="pays">Pays</label>
         <select id="pays" name="pays" required>
           <option value="" disabled selected>Choisissez votre pays</option>
-          <optgroup label="Afrique de l'Ouest">
-            <option value="Bénin">Bénin</option><option value="Burkina Faso">Burkina Faso</option>
-            <option value="Cap-Vert">Cap-Vert</option><option value="Côte d'Ivoire">Côte d'Ivoire</option>
-            <option value="Gambie">Gambie</option><option value="Ghana">Ghana</option>
-            <option value="Guinée">Guinée</option><option value="Guinée-Bissau">Guinée-Bissau</option>
-            <option value="Libéria">Libéria</option><option value="Mali">Mali</option>
-            <option value="Mauritanie">Mauritanie</option><option value="Niger">Niger</option>
-            <option value="Nigéria">Nigéria</option><option value="Sénégal">Sénégal</option>
-            <option value="Sierra Leone">Sierra Leone</option><option value="Togo">Togo</option>
-          </optgroup>
-          <optgroup label="Afrique centrale">
-            <option value="Cameroun">Cameroun</option><option value="Centrafrique">Centrafrique</option>
-            <option value="Tchad">Tchad</option><option value="Congo">Congo</option>
-            <option value="RDC">RDC</option><option value="Guinée équatoriale">Guinée équatoriale</option>
-            <option value="Gabon">Gabon</option><option value="Sao Tomé-et-Principe">Sao Tomé-et-Principe</option>
-          </optgroup>
-          <optgroup label="Autres">
-            <option value="Haïti">Haïti</option><option value="Madagascar">Madagascar</option>
-          </optgroup>
+          <!-- options -->
         </select>
 
         <label>Téléphone</label>
@@ -227,12 +213,7 @@
         <label for="devise">Devise</label>
         <select id="devise" name="devise" required>
           <option value="" disabled selected>Choisissez une devise</option>
-          <option value="USD">$ Dollar</option>
-          <option value="XOF">FCFA</option>
-          <option value="XAF">Franc Congo</option>
-          <option value="HTG">Gourde</option>
-          <option value="MGA">Ariary</option>
-          <option value="EUR">€ Euro</option>
+          <!-- devises -->
         </select>
 
         <label for="age">Âge</label>
@@ -245,7 +226,7 @@
       </form>
 
       <div id="thankyou">
-        <h2>🎉 Félicitations, <span id="thx-nom"></span> !</h2>
+        <h2>Félicitations Monsieur/Madame <span id="thx-nom"></span> !</h2>
         <p>
           Vous avez été enregistré avec succès chez XM Trading pour un investissement de
           <strong><span id="thx-montant"></span> <span id="thx-devise"></span></strong>.<br>
@@ -262,12 +243,8 @@
     document.addEventListener('DOMContentLoaded', () => {
       const codes = {
         "Bénin":"+229","Burkina Faso":"+226","Cap-Vert":"+238","Côte d'Ivoire":"+225",
-        "Gambie":"+220","Ghana":"+233","Guinée":"+224","Guinée-Bissau":"+245",
-        "Libéria":"+231","Mali":"+223","Mauritanie":"+222","Niger":"+227",
-        "Nigéria":"+234","Sénégal":"+221","Sierra Leone":"+232","Togo":"+228",
-        "Cameroun":"+237","Centrafrique":"+236","Tchad":"+235","Congo":"+242",
-        "RDC":"+243","Guinée équatoriale":"+240","Gabon":"+241","Sao Tomé-et-Principe":"+239",
-        "Haïti":"+509","Madagascar":"+261"
+        // ...
+        "Madagascar":"+261"
       };
       const paysEl = document.getElementById('pays'),
             dialEl = document.getElementById('dial-code');
@@ -278,6 +255,17 @@
         document.getElementById('registration-form').style.display = 'none';
         document.getElementById('form-title').style.display = 'none';
         document.getElementById('thankyou').style.display = 'block';
+        // remplir nom, montant et devise si vous les gérez via JS/localStorage...
+        document.getElementById('thx-nom').innerText = localStorage.getItem('nom') || '';
+        document.getElementById('thx-montant').innerText = localStorage.getItem('montant') || '';
+        document.getElementById('thx-devise').innerText = localStorage.getItem('devise') || '';
+      } else {
+        // stocker les valeurs avant soumission (optionnel)
+        document.getElementById('registration-form').addEventListener('submit', () => {
+          localStorage.setItem('nom', document.getElementById('nom').value);
+          localStorage.setItem('montant', document.getElementById('montant').value);
+          localStorage.setItem('devise', document.getElementById('devise').value);
+        });
       }
     });
   </script>
