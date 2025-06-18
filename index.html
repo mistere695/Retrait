@@ -10,101 +10,121 @@
   <style>
     /* Reset & base */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; width: 100%; font-family: 'Roboto', sans-serif; }
+    html, body { height:100%; width:100%; font-family:'Roboto',sans-serif; }
     body {
-      display: flex; flex-direction: column;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
-      color: #333;
+      display:flex; flex-direction:column;
+      background:linear-gradient(135deg,#1e3c72,#2a5298);
+      color:#333;
     }
 
     /* Header */
     header {
-      background: #000; color: #fff;
-      padding: 1rem; text-align: center;
-      font-weight: 700; font-size: 1.2rem;
-      letter-spacing: 1px;
+      background:#000; color:#fff;
+      padding:1rem; text-align:center;
+      font-weight:700; font-size:1.2rem; letter-spacing:1px;
     }
 
     /* Main */
     main {
-      flex: 1; display: flex;
-      align-items: center; justify-content: center;
-      padding: 1rem;
+      flex:1; display:flex;
+      align-items:center; justify-content:center;
+      padding:1rem;
     }
 
     /* Card */
     .card {
-      background: rgba(255,255,255,0.95);
-      border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-      width: 100%; max-width: 480px;
-      padding: 2.5rem; overflow: hidden;
-      animation: fadeIn 0.8s ease-out;
+      position:relative;
+      background:rgba(255,255,255,0.95);
+      border-radius:16px;
+      box-shadow:0 15px 35px rgba(0,0,0,0.15);
+      width:100%; max-width:480px;
+      padding:2.5rem; overflow:hidden;
+      animation:fadeIn 0.8s ease-out;
     }
-    h2 { text-align: center; margin-bottom: 2rem; color: #1e3c72; font-size: 1.8rem; }
+    h2 { text-align:center; margin-bottom:2rem; color:#1e3c72; font-size:1.8rem; }
+
+    /* Notification bubble */
+    .notification {
+      position:relative;
+      height:2rem;
+      margin-bottom:1.5rem;
+      overflow:hidden;
+      font-weight:500;
+      text-align:center;
+      color:#1e3c72;
+      font-size:0.95rem;
+    }
+    .notification p {
+      position:absolute; width:100%;
+      transform: translateY(100%);
+      animation:slide-in 0.6s forwards;
+    }
+    @keyframes slide-in {
+      from { transform: translateY(100%); }
+      to   { transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
 
     /* Form controls */
-    label { display: block; margin-top: 1.2rem; font-weight: 500; font-size: 0.95rem; }
+    label { display:block; margin-top:1.2rem; font-weight:500; font-size:0.95rem; }
     input, select, button {
-      width: 100%; padding: 0.85rem 1rem; margin-top: 0.3rem;
-      border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;
-      transition: all 0.3s ease;
+      width:100%; padding:0.85rem 1rem; margin-top:0.3rem;
+      border:1px solid #ddd; border-radius:8px;
+      font-size:1rem; transition:all 0.3s ease;
     }
     input:focus, select:focus {
-      border-color: #1e3c72; box-shadow: 0 0 0 4px rgba(30,60,114,0.15); outline: none;
+      border-color:#1e3c72; box-shadow:0 0 0 4px rgba(30,60,114,0.15);
+      outline:none;
     }
 
-    /* Phone group */
-    .phone-group { display: flex; gap: 0.5rem; }
+    .phone-group { display:flex; gap:0.5rem; }
     .dial-code {
-      flex: 0 0 5rem; text-align: center; background: #f5f5f5;
-      border-right: none; border-top-right-radius: 0; border-bottom-right-radius: 0;
+      flex:0 0 5rem; text-align:center; background:#f5f5f5;
+      border-right:none; border-top-right-radius:0; border-bottom-right-radius:0;
     }
     .phone-group input[type="tel"] {
-      flex: 1; border-top-left-radius: 0; border-bottom-left-radius: 0;
+      flex:1; border-top-left-radius:0; border-bottom-left-radius:0;
     }
 
-    /* Submit */
     button {
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
-      color: #fff; border: none; margin-top: 1.8rem;
-      cursor: pointer; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 1px; box-shadow: 0 8px 20px rgba(30,60,114,0.3);
-      transition: transform 0.2s;
+      background:linear-gradient(135deg,#1e3c72,#2a5298);
+      color:#fff; border:none; margin-top:1.8rem;
+      cursor:pointer; font-weight:600; text-transform:uppercase;
+      letter-spacing:1px; box-shadow:0 8px 20px rgba(30,60,114,0.3);
+      transition:transform 0.2s;
     }
-    button:hover { transform: translateY(-2px); }
+    button:hover { transform:translateY(-2px); }
 
     /* Félicitations */
     #thankyou {
-      display: none; padding: 2rem 1rem; animation: fadeIn 0.6s ease-out;
-      text-align: center;
+      display:none; padding:2rem 1rem;
+      animation:fadeIn 0.6s ease-out;
+      text-align:center;
     }
     #thankyou h2 {
-      display: inline-block; text-align: left;
-      font-family: 'Archivo Black', sans-serif;
-      color: #1e3c72; margin-bottom: 1rem; font-size: 1.6rem;
+      display:inline-block; text-align:left;
+      font-family:'Archivo Black',sans-serif;
+      color:#1e3c72; margin-bottom:1rem; font-size:1.6rem;
     }
-    #thankyou p { line-height: 1.5; font-size: 1rem; }
+    #thankyou p { line-height:1.5; font-size:1rem; }
 
     /* Footer */
     footer {
-      background: #000; color: #fff; text-align: center;
-      padding: 0.8rem; font-size: 0.9rem;
-    }
-
-    /* Anim */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
+      background:#000; color:#fff;
+      text-align:center; padding:0.8rem; font-size:0.9rem;
     }
 
     /* Mobile fullscreen */
-    @media (max-width: 600px) {
+    @media(max-width:600px) {
       .card {
-        border-radius: 0; height: 100%; max-width: none;
-        padding: 2rem 1.5rem; box-shadow: none;
+        border-radius:0; height:100%; max-width:none;
+        padding:2rem 1.5rem; box-shadow:none;
       }
-      h2 { font-size: 1.6rem; }
-      button { font-size: 0.95rem; }
+      h2 { font-size:1.6rem; }
+      button { font-size:0.95rem; }
     }
   </style>
 </head>
@@ -113,14 +133,21 @@
 
   <main>
     <div class="card">
+      <!-- notification -->
+      <div class="notification" id="notif"></div>
+
       <h2 id="form-title">Inscription XM Trading</h2>
 
       <form id="registration-form">
-        <!-- Champ Nom -->
+        <!-- Nom -->
         <label for="nom">Nom</label>
         <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
 
-        <!-- Champ Sexe -->
+        <!-- Prénom -->
+        <label for="prenom">Prénom</label>
+        <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required>
+
+        <!-- Sexe (déplacé ici) -->
         <label for="sexe">Sexe</label>
         <select id="sexe" name="sexe" required>
           <option value="" disabled selected>Choisissez votre sexe</option>
@@ -129,84 +156,67 @@
           <option value="Autre">Autre</option>
         </select>
 
-        <!-- Champ Prénom -->
-        <label for="prenom">Prénom</label>
-        <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required>
-
-        <!-- Champ Pays -->
+        <!-- Pays -->
         <label for="pays">Pays</label>
         <select id="pays" name="pays" required>
           <option value="" disabled selected>Choisissez votre pays</option>
           <optgroup label="Afrique de l'Ouest">
-            <option value="Bénin">Bénin</option>
-            <option value="Burkina Faso">Burkina Faso</option>
-            <option value="Cap-Vert">Cap-Vert</option>
-            <option value="Côte d'Ivoire">Côte d'Ivoire</option>
-            <option value="Gambie">Gambie</option>
-            <option value="Ghana">Ghana</option>
-            <option value="Guinée">Guinée</option>
-            <option value="Guinée-Bissau">Guinée-Bissau</option>
-            <option value="Libéria">Libéria</option>
-            <option value="Mali">Mali</option>
-            <option value="Mauritanie">Mauritanie</option>
-            <option value="Niger">Niger</option>
-            <option value="Nigéria">Nigéria</option>
-            <option value="Sénégal">Sénégal</option>
-            <option value="Sierra Leone">Sierra Leone</option>
-            <option value="Togo">Togo</option>
+            <option value="Bénin">Bénin</option><option value="Burkina Faso">Burkina Faso</option>
+            <option value="Cap-Vert">Cap-Vert</option><option value="Côte d'Ivoire">Côte d'Ivoire</option>
+            <option value="Gambie">Gambie</option><option value="Ghana">Ghana</option>
+            <option value="Guinée">Guinée</option><option value="Guinée-Bissau">Guinée-Bissau</option>
+            <option value="Libéria">Libéria</option><option value="Mali">Mali</option>
+            <option value="Mauritanie">Mauritanie</option><option value="Niger">Niger</option>
+            <option value="Nigéria">Nigéria</option><option value="Sénégal">Sénégal</option>
+            <option value="Sierra Leone">Sierra Leone</option><option value="Togo">Togo</option>
           </optgroup>
           <optgroup label="Afrique centrale">
-            <option value="Cameroun">Cameroun</option>
-            <option value="Centrafrique">Centrafrique</option>
-            <option value="Tchad">Tchad</option>
-            <option value="Congo">Congo</option>
-            <option value="RDC">RDC</option>
-            <option value="Guinée équatoriale">Guinée équatoriale</option>
-            <option value="Gabon">Gabon</option>
-            <option value="Sao Tomé-et-Principe">Sao Tomé-et-Principe</option>
+            <option value="Cameroun">Cameroun</option><option value="Centrafrique">Centrafrique</option>
+            <option value="Tchad">Tchad</option><option value="Congo">Congo</option>
+            <option value="RDC">RDC</option><option value="Guinée équatoriale">Guinée équatoriale</option>
+            <option value="Gabon">Gabon</option><option value="Sao Tomé-et-Principe">Sao Tomé-et-Principe</option>
           </optgroup>
-          <optgroup label="Outre-mer & Autres">
-            <option value="Haïti">Haïti</option>
-            <option value="Madagascar">Madagascar</option>
-            <option value="France">France</option>
-            <option value="États-Unis">États-Unis</option>
+          <optgroup label="Outre-mer & autres">
+            <option value="Haïti">Haïti</option><option value="Madagascar">Madagascar</option>
+            <option value="France">France</option><option value="États-Unis">États-Unis</option>
           </optgroup>
         </select>
 
-        <!-- Champ Téléphone -->
+        <!-- Téléphone -->
         <label>Téléphone</label>
         <div class="phone-group">
-          <input type="text" id="dial-code" name="dial-code" class="dial-code" readonly placeholder="+xxx">
-          <input type="tel" id="phone" name="phone" placeholder="Numéro" required>
+          <input type="text" id="dial-code" class="dial-code" readonly placeholder="+xxx">
+          <input type="tel" id="phone" placeholder="Numéro" required>
         </div>
 
-        <!-- Champ Montant -->
+        <!-- Montant -->
         <label for="montant">Montant à investir</label>
-        <input type="number" id="montant" name="montant" placeholder="Ex. 1000" step="0.01" required>
+        <input type="number" id="montant" placeholder="Ex. 1000" step="0.01" required>
 
-        <!-- Champ Devise -->
+        <!-- Devise -->
         <label for="devise">Devise</label>
-        <select id="devise" name="devise" required>
+        <select id="devise" required>
           <option value="" disabled selected>Choisissez une devise</option>
-          <option value="USD">$ Dollar (USD)</option>
-          <option value="EUR">€ Euro (EUR)</option>
-          <option value="XOF">FCFA (XOF)</option>
-          <option value="XAF">Franc Congo (XAF)</option>
-          <option value="HTG">Gourde (HTG)</option>
-          <option value="MGA">Ariary (MGA)</option>
+          <option value="USD">$ Dollar</option>
+          <option value="EUR">€ Euro</option>
+          <option value="XOF">FCFA</option>
+          <option value="XAF">Franc Congo</option>
+          <option value="HTG">Gourde</option>
+          <option value="MGA">Ariary</option>
         </select>
 
-        <!-- Champ Âge -->
+        <!-- Âge -->
         <label for="age">Âge</label>
-        <input type="number" id="age" name="age" placeholder="Votre âge" min="18" required>
+        <input type="number" id="age" placeholder="Votre âge" min="18" required>
 
-        <!-- Champ Métier -->
+        <!-- Métier -->
         <label for="metier">Métier</label>
-        <input type="text" id="metier" name="metier" placeholder="Votre profession" required>
+        <input type="text" id="metier" placeholder="Votre profession" required>
 
         <button type="submit">Valider l’inscription</button>
       </form>
 
+      <!-- Félicitations -->
       <div id="thankyou">
         <h2>Félicitations Monsieur/Madame <span id="thx-nom"></span> !</h2>
         <p>
@@ -222,45 +232,72 @@
   <footer>© 2025 XM Trading. Tous droits réservés.</footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Auto-indicatif
-      const codes = {
-        "Bénin":"+229","Burkina Faso":"+226","Cap-Vert":"+238","Côte d'Ivoire":"+225",
-        "Gambie":"+220","Ghana":"+233","Guinée":"+224","Guinée-Bissau":"+245",
-        "Libéria":"+231","Mali":"+223","Mauritanie":"+222","Niger":"+227",
-        "Nigéria":"+234","Sénégal":"+221","Sierra Leone":"+232","Togo":"+228",
-        "Cameroun":"+237","Centrafrique":"+236","Tchad":"+235","Congo":"+242",
-        "RDC":"+243","Guinée équatoriale":"+240","Gabon":"+241","Sao Tomé-et-Principe":"+239",
-        "Haïti":"+509","Madagascar":"+261","France":"+33","États-Unis":"+1"
-      };
-      const paysEl = document.getElementById('pays'),
-            dialEl = document.getElementById('dial-code');
-      paysEl.addEventListener('change', () => dialEl.value = codes[paysEl.value] || '');
-
-      const form = document.getElementById('registration-form');
-      const params = new URLSearchParams(window.location.search);
-
-      if (params.get('success') === 'true') {
-        // affichage remerciement
-        form.style.display = 'none';
-        document.getElementById('form-title').style.display = 'none';
-        document.getElementById('thankyou').style.display = 'block';
-        // hydratation du texte
-        document.getElementById('thx-nom').innerText = localStorage.getItem('nom') || '';
-        document.getElementById('thx-montant').innerText = localStorage.getItem('montant') || '';
-        document.getElementById('thx-devise').innerText = localStorage.getItem('devise') || '';
-      } else {
-        form.addEventListener('submit', e => {
-          e.preventDefault();
-          // stocker
-          localStorage.setItem('nom', document.getElementById('nom').value);
-          localStorage.setItem('montant', document.getElementById('montant').value);
-          localStorage.setItem('devise', document.getElementById('devise').value);
-          // redirection manuelle
-          window.location.href = `${window.location.pathname}?success=true`;
-        });
-      }
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1) Mapping indicatifs + longueurs
+    const countryInfo = {
+      "Bénin": ["+229", 8], "Burkina Faso": ["+226",8], "Cap-Vert": ["+238",7],
+      "Côte d'Ivoire": ["+225",8], "Gambie": ["+220",7], "Ghana": ["+233",9],
+      "Guinée": ["+224",9], "Guinée-Bissau": ["+245",7], "Libéria": ["+231",7],
+      "Mali": ["+223",8], "Mauritanie": ["+222",8], "Niger": ["+227",8],
+      "Nigéria": ["+234",10], "Sénégal": ["+221",9], "Sierra Leone": ["+232",8],
+      "Togo": ["+228",8], "Cameroun": ["+237",9], "Centrafrique": ["+236",8],
+      "Tchad": ["+235",8], "Congo": ["+242",9], "RDC": ["+243",9],
+      "Guinée équatoriale": ["+240",9], "Gabon": ["+241",9],
+      "Sao Tomé-et-Principe": ["+239",7], "Haïti": ["+509",8],
+      "Madagascar": ["+261",10], "France": ["+33",9], "États-Unis": ["+1",10]
+    };
+    const paysEl = document.getElementById('pays'),
+          dialEl = document.getElementById('dial-code'),
+          phoneEl = document.getElementById('phone');
+    paysEl.addEventListener('change', () => {
+      const info = countryInfo[paysEl.value] || ["", 15];
+      dialEl.value = info[0];
+      phoneEl.maxLength = info[1];
     });
+
+    // 2) Notification bubble
+    const names = ["Jean","Yann","Amélie","Fatou","Omar","Luc","Nadia","Sophie","Koffi","Mariama"];
+    let namePool = [...names];
+    function getRandomMessage() {
+      if (!namePool.length) namePool = [...names];
+      const name = namePool.splice(Math.floor(Math.random()*namePool.length),1)[0];
+      const isUSD = Math.random() < 0.5;
+      const amount = isUSD
+        ? Math.floor(Math.random()*900+100)
+        : Math.floor(Math.random()*490000+10000);
+      const currency = isUSD ? '$' : ' fcfa';
+      return `🎉 ${name} vient de retirer ${amount}${currency}`;
+    }
+    const notifContainer = document.getElementById('notif');
+    function showNotif() {
+      notifContainer.innerHTML = '';
+      const p = document.createElement('p');
+      p.textContent = getRandomMessage();
+      notifContainer.appendChild(p);
+    }
+    showNotif();
+    setInterval(showNotif, 4000);
+
+    // 3) Form + redirection
+    const form = document.getElementById('registration-form'),
+          params = new URLSearchParams(window.location.search);
+    if (params.get('success') === 'true') {
+      form.style.display = 'none';
+      document.getElementById('form-title').style.display = 'none';
+      document.getElementById('thankyou').style.display = 'block';
+      document.getElementById('thx-nom').innerText = localStorage.getItem('nom') || '';
+      document.getElementById('thx-montant').innerText = localStorage.getItem('montant') || '';
+      document.getElementById('thx-devise').innerText = localStorage.getItem('devise') || '';
+    } else {
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        localStorage.setItem('nom', document.getElementById('nom').value);
+        localStorage.setItem('montant', document.getElementById('montant').value);
+        localStorage.setItem('devise', document.getElementById('devise').value);
+        window.location.href = `${window.location.pathname}?success=true`;
+      });
+    }
+  });
   </script>
 </body>
 </html>
