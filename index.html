@@ -11,34 +11,27 @@
     /* Reset & base */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
-      height: 100%;
-      width: 100%;
+      height: 100%; width: 100%;
       font-family: 'Roboto', sans-serif;
     }
     body {
-      display: flex;
-      flex-direction: column;
+      display: flex; flex-direction: column;
       background: linear-gradient(135deg, #1e3c72, #2a5298);
       color: #333;
     }
 
     /* En-tête */
     header {
-      background: #000;
-      color: #fff;
-      padding: 1rem;
-      text-align: center;
-      font-weight: 700;
-      font-size: 1.2rem;
+      background: #000; color: #fff;
+      padding: 1rem; text-align: center;
+      font-weight: 700; font-size: 1.2rem;
       letter-spacing: 1px;
     }
 
     /* Contenu principal */
     main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      flex: 1; display: flex;
+      align-items: center; justify-content: center;
       padding: 1rem;
     }
 
@@ -47,11 +40,8 @@
       background: rgba(255,255,255,0.95);
       border-radius: 16px;
       box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-      width: 100%;
-      max-width: 480px;
-      padding: 2.5rem;
-      position: relative;
-      overflow: hidden;
+      width: 100%; max-width: 480px;
+      padding: 2.5rem; overflow: hidden;
       animation: fadeIn 0.8s ease-out;
     }
     h2 {
@@ -87,8 +77,7 @@
 
     /* Téléphone */
     .phone-group {
-      display: flex;
-      gap: 0.5rem;
+      display: flex; gap: 0.5rem;
     }
     .dial-code {
       flex: 0 0 5rem;
@@ -127,11 +116,11 @@
       display: none;
       padding: 2rem 1rem;
       animation: fadeIn 0.6s ease-out;
-      text-align: center; /* centre les éléments inline-block */
+      text-align: center;
     }
     #thankyou h2 {
-      display: inline-block;       /* pour pouvoir être centré par text-align:center du parent */
-      text-align: left;            /* mais texte aligné à gauche */
+      display: inline-block;
+      text-align: left;
       font-family: 'Archivo Black', sans-serif;
       color: #1e3c72;
       margin-bottom: 1rem;
@@ -144,10 +133,8 @@
 
     /* Pied de page */
     footer {
-      background: #000;
-      color: #fff;
-      text-align: center;
-      padding: 0.8rem;
+      background: #000; color: #fff;
+      text-align: center; padding: 0.8rem;
       font-size: 0.9rem;
     }
 
@@ -189,36 +176,78 @@
           <label>Si vous êtes humain, ne remplissez pas <input name="bot-field"></label>
         </p>
 
+        <!-- Champ Nom -->
         <label for="nom">Nom</label>
         <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
 
+        <!-- Champ Sexe -->
+        <label for="sexe">Sexe</label>
+        <select id="sexe" name="sexe" required>
+          <option value="" disabled selected>Choisissez votre sexe</option>
+          <option value="Homme">Homme</option>
+          <option value="Femme">Femme</option>
+          <option value="Autre">Autre</option>
+        </select>
+
+        <!-- Champ Prénom -->
         <label for="prenom">Prénom</label>
         <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required>
 
+        <!-- Champ Pays -->
         <label for="pays">Pays</label>
         <select id="pays" name="pays" required>
           <option value="" disabled selected>Choisissez votre pays</option>
-          <!-- options -->
+          <optgroup label="Afrique de l'Ouest">
+            <option value="Bénin">Bénin</option><option value="Burkina Faso">Burkina Faso</option>
+            <option value="Cap-Vert">Cap-Vert</option><option value="Côte d'Ivoire">Côte d'Ivoire</option>
+            <option value="Gambie">Gambie</option><option value="Ghana">Ghana</option>
+            <option value="Guinée">Guinée</option><option value="Guinée-Bissau">Guinée-Bissau</option>
+            <option value="Libéria">Libéria</option><option value="Mali">Mali</option>
+            <option value="Mauritanie">Mauritanie</option><option value="Niger">Niger</option>
+            <option value="Nigéria">Nigéria</option><option value="Sénégal">Sénégal</option>
+            <option value="Sierra Leone">Sierra Leone</option><option value="Togo">Togo</option>
+          </optgroup>
+          <optgroup label="Afrique centrale">
+            <option value="Cameroun">Cameroun</option><option value="Centrafrique">Centrafrique</option>
+            <option value="Tchad">Tchad</option><option value="Congo">Congo</option>
+            <option value="RDC">RDC</option><option value="Guinée équatoriale">Guinée équatoriale</option>
+            <option value="Gabon">Gabon</option><option value="Sao Tomé-et-Principe">Sao Tomé-et-Principe</option>
+          </optgroup>
+          <optgroup label="Outre-mer & Autres">
+            <option value="Haïti">Haïti</option><option value="Madagascar">Madagascar</option>
+            <option value="France">France</option><option value="États-Unis">États-Unis</option>
+            <!-- Ajoute d'autres si besoin -->
+          </optgroup>
         </select>
 
+        <!-- Champ Téléphone -->
         <label>Téléphone</label>
         <div class="phone-group">
           <input type="text" id="dial-code" name="dial-code" class="dial-code" readonly placeholder="+xxx">
           <input type="tel" id="phone" name="phone" placeholder="Numéro" required>
         </div>
 
+        <!-- Champ Montant -->
         <label for="montant">Montant à investir</label>
         <input type="number" id="montant" name="montant" placeholder="Ex. 1000" step="0.01" required>
 
+        <!-- Champ Devise -->
         <label for="devise">Devise</label>
         <select id="devise" name="devise" required>
           <option value="" disabled selected>Choisissez une devise</option>
-          <!-- devises -->
+          <option value="USD">$ Dollar (USD)</option>
+          <option value="EUR">€ Euro (EUR)</option>
+          <option value="XOF">FCFA (XOF)</option>
+          <option value="XAF">Franc Congo (XAF)</option>
+          <option value="HTG">Gourde (HTG)</option>
+          <option value="MGA">Ariary (MGA)</option>
         </select>
 
+        <!-- Champ Âge -->
         <label for="age">Âge</label>
         <input type="number" id="age" name="age" placeholder="Votre âge" min="18" required>
 
+        <!-- Champ Métier -->
         <label for="metier">Métier</label>
         <input type="text" id="metier" name="metier" placeholder="Votre profession" required>
 
@@ -230,44 +259,4 @@
         <p>
           Vous avez été enregistré avec succès chez XM Trading pour un investissement de
           <strong><span id="thx-montant"></span> <span id="thx-devise"></span></strong>.<br>
-          Contactez votre administrateur sur WhatsApp pour effectuer votre dépôt.<br>
-          Une fois le dépôt effectué, le traitement prendra jusqu’à <strong>2 heures</strong>.
-        </p>
-      </div>
-    </div>
-  </main>
-
-  <footer>© 2025 XM Trading. Tous droits réservés.</footer>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const codes = {
-        "Bénin":"+229","Burkina Faso":"+226","Cap-Vert":"+238","Côte d'Ivoire":"+225",
-        // ...
-        "Madagascar":"+261"
-      };
-      const paysEl = document.getElementById('pays'),
-            dialEl = document.getElementById('dial-code');
-      paysEl.addEventListener('change', () => dialEl.value = codes[paysEl.value] || '');
-
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('success') === 'true') {
-        document.getElementById('registration-form').style.display = 'none';
-        document.getElementById('form-title').style.display = 'none';
-        document.getElementById('thankyou').style.display = 'block';
-        // remplir nom, montant et devise si vous les gérez via JS/localStorage...
-        document.getElementById('thx-nom').innerText = localStorage.getItem('nom') || '';
-        document.getElementById('thx-montant').innerText = localStorage.getItem('montant') || '';
-        document.getElementById('thx-devise').innerText = localStorage.getItem('devise') || '';
-      } else {
-        // stocker les valeurs avant soumission (optionnel)
-        document.getElementById('registration-form').addEventListener('submit', () => {
-          localStorage.setItem('nom', document.getElementById('nom').value);
-          localStorage.setItem('montant', document.getElementById('montant').value);
-          localStorage.setItem('devise', document.getElementById('devise').value);
-        });
-      }
-    });
-  </script>
-</body>
-</html>
+          Contactez votre administrateur sur
