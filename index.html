@@ -2,247 +2,238 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inscription XM Trading</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Roboto', sans-serif;
-      background: #f0f2f5;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      color: #fff;
     }
     header, footer {
       background: #000;
-      color: #fff;
       text-align: center;
-      padding: 15px 10px;
-    }
-    header h1, footer p {
+      padding: 1rem;
       font-size: 1.2rem;
+      font-weight: bold;
     }
     main {
       flex: 1;
       display: flex;
       justify-content: center;
-      padding: 20px 10px;
+      align-items: flex-start;
+      padding: 2rem 1rem;
     }
     .card {
       background: #fff;
-      width: 100%;
-      max-width: 450px;
-      padding: 20px;
+      color: #333;
       border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 500px;
+      padding: 2rem;
       position: relative;
     }
     h2 {
       text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
       color: #1e3c72;
-      font-size: 1.5rem;
-      margin-bottom: 20px;
+      font-size: 1.8rem;
     }
     label {
       display: block;
-      margin: 12px 0 5px;
-      color: #444;
-      font-size: 1rem;
+      margin-top: 1rem;
+      font-weight: 500;
     }
     input, select, button {
       width: 100%;
-      padding: 14px 12px;
+      padding: 0.75rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
       font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background: #f9fbfd;
-      outline: none;
-    }
-    input:focus, select:focus {
-      border-color: #1e3c72;
-      background: #fff;
-    }
-    .phone-group {
-      display: flex;
-      gap: 8px;
-    }
-    .dial-code {
-      flex: 0 0 80px;
-      background: #f0f4f8;
-      text-align: center;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      padding: 14px 0;
     }
     button {
       background: #1e3c72;
       color: #fff;
-      font-weight: 600;
-      margin-top: 20px;
+      border: none;
+      margin-top: 1.5rem;
       cursor: pointer;
-      transition: background 0.3s;
+      font-weight: 500;
     }
-    button:hover {
-      background: #16325c;
-    }
-    #notifications {
-      position: absolute;
-      top: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 30px);
-      pointer-events: none;
-      z-index: 10;
-    }
-    .notif {
-      background: rgba(30,60,114,0.85);
-      color: #fff;
-      padding: 10px 15px;
-      border-radius: 8px;
-      font-size: 1rem;
-      margin-bottom: 8px;
-      text-align: center;
-      backdrop-filter: blur(3px);
-      animation: slideIn 0.4s, fadeOut 0.4s 4.6s forwards;
-    }
-    @keyframes slideIn {
-      from { transform: translate(-50%, -100%); opacity: 0; }
-      to { transform: translate(-50%, 0); opacity: 1; }
-    }
-    @keyframes fadeOut {
-      to { opacity: 0; height: 0; padding: 0; margin: 0; }
-    }
+    button:hover { background: #16325c; }
+    .phone-group { display: flex; gap: 0.5rem; }
+    .dial-code { flex: 0 0 4.5rem; background: #f0f0f0; text-align: center; }
+    .phone-group input[type="tel"] { flex: 1; }
     #thankyou {
       display: none;
       text-align: center;
-      padding: 20px;
-      background: #1e3c72;
-      color: #fff;
-      border-radius: 12px;
-      margin-top: 10px;
+      padding: 2rem 1rem;
     }
-    #thankyou h2 { font-size: 1.5rem; margin-bottom: 10px; }
-    #thankyou p { font-size: 1rem; }
-    #thankyou .cta {
-      display: inline-block;
-      background: #fff;
+    #thankyou h2 {
       color: #1e3c72;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    #thankyou p {
+      color: #444;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    .notification {
+      position: fixed;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      color: #fff;
       padding: 10px 20px;
-      border-radius: 8px;
-      text-decoration: none;
-      margin-top: 10px;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      z-index: 999;
+      animation: fadeinout 6s infinite;
+    }
+    @keyframes fadeinout {
+      0% { opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>XM Trading Investment</h1>
-  </header>
+<header>XM Trading Investissement</header>
+<main>
+  <div class="card">
+    <h2 id="form-title">Formulaire d'inscription</h2>
+    <form id="registration-form" name="inscription-xm" method="POST" data-netlify="true" action="/?success=true">
+      <input type="hidden" name="form-name" value="inscription-xm">
+      <label for="sexe">Sexe</label>
+      <select id="sexe" name="sexe" required>
+        <option value="" disabled selected>Choisissez</option>
+        <option value="Homme">Homme</option>
+        <option value="Femme">Femme</option>
+      </select>
 
-  <main>
-    <div class="card">
-      <div id="notifications"></div>
+      <label for="nom">Nom</label>
+      <input type="text" id="nom" name="nom" required>
 
-      <h2 id="form-title">Inscription</h2>
-      <form id="registration-form" name="inscription-xm" method="POST" data-netlify="true" action="/?success=true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="inscription-xm">
-        <p style="display:none;"><label>Ne remplissez pas <input name="bot-field"></label></p>
+      <label for="prenom">Prénom</label>
+      <input type="text" id="prenom" name="prenom" required>
 
-        <label for="nom">Nom</label>
-        <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
+      <label for="pays">Pays</label>
+      <select id="pays" name="pays" required>
+        <option value="" disabled selected>Choisissez votre pays</option>
+        <optgroup label="Afrique de l'Ouest">
+          <option value="Bénin">Bénin</option><option value="Sénégal">Sénégal</option>
+          <option value="Côte d'Ivoire">Côte d'Ivoire</option><option value="Mali">Mali</option>
+          <option value="Guinée">Guinée</option>
+        </optgroup>
+        <optgroup label="Afrique centrale">
+          <option value="Cameroun">Cameroun</option><option value="Congo">Congo</option>
+          <option value="RDC">RDC</option><option value="Tchad">Tchad</option>
+        </optgroup>
+        <optgroup label="Autres">
+          <option value="Haïti">Haïti</option><option value="Madagascar">Madagascar</option>
+        </optgroup>
+      </select>
 
-        <label for="prenom">Prénom</label>
-        <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required>
-
-        <label for="pays">Pays</label>
-        <select id="pays" name="pays" required>
-          <option value="" disabled selected>Choisissez votre pays</option>
-          <option>Cameroun</option><option>Sénégal</option><option>Côte d'Ivoire</option><option>RDC</option>
-        </select>
-
-        <label>Téléphone</label>
-        <div class="phone-group">
-          <input type="text" id="dial-code" name="dial-code" class="dial-code" readonly placeholder="+xxx">
-          <input type="tel" id="phone" name="phone" placeholder="Numéro" required>
-        </div>
-
-        <label for="montant">Montant à investir</label>
-        <input type="number" id="montant" name="montant" placeholder="Ex: 1000" required>
-
-        <label for="devise">Devise</label>
-        <select id="devise" name="devise" required>
-          <option value="" disabled selected>Choisissez une devise</option>
-          <option>FCFA</option><option>USD</option><option>EUR</option>
-        </select>
-
-        <label for="age">Âge</label>
-        <input type="number" id="age" name="age" min="18" required>
-
-        <label for="metier">Métier</label>
-        <input type="text" id="metier" name="metier" placeholder="Votre métier" required>
-
-        <button type="submit">Valider l’inscription</button>
-      </form>
-
-      <div id="thankyou">
-        <h2>🎉 Félicitations <span id="thx-nom"></span>!</h2>
-        <p>Inscription validée pour un investissement de <strong><span id="thx-montant"></span> <span id="thx-devise"></span></strong>.</p>
-        <a href="#" class="cta">Contacter l’admin</a>
+      <label>Téléphone</label>
+      <div class="phone-group">
+        <input type="text" id="dial-code" name="dial-code" class="dial-code" readonly placeholder="+xxx">
+        <input type="tel" id="phone" name="phone" required>
       </div>
+
+      <label for="montant">Montant à investir</label>
+      <input type="number" id="montant" name="montant" required>
+
+      <label for="devise">Devise</label>
+      <select id="devise" name="devise" required>
+        <option value="" disabled selected>Choisissez</option>
+        <option value="USD">USD $</option><option value="XOF">FCFA</option>
+        <option value="XAF">Franc Congo</option><option value="HTG">Gourde</option>
+        <option value="MGA">Ariary</option><option value="EUR">Euro</option>
+      </select>
+
+      <label for="age">Âge</label>
+      <input type="number" id="age" name="age" min="18" required>
+
+      <label for="metier">Métier</label>
+      <input type="text" id="metier" name="metier" required>
+
+      <button type="submit">Valider l’inscription</button>
+    </form>
+
+    <!-- Message de félicitations -->
+    <div id="thankyou">
+      <h2>🎉 Félicitations <span id="thx-civilite"></span> <span id="thx-nom"></span> !</h2>
+      <p>Vous avez été enregistré avec succès pour un investissement de <strong><span id="thx-montant"></span> <span id="thx-devise"></span></strong>.</p>
+      <p>Contactez votre administrateur sur WhatsApp pour effectuer votre dépôt pour le lancement de votre investissement.</p>
+      <p>Après le dépôt, vous allez simplement patienter <strong>2 heures</strong> pour recevoir votre gain directement sur votre compte.</p>
+      <p>Merci pour votre confiance !</p>
     </div>
-  </main>
+  </div>
+</main>
+<footer>© 2025 XM Trading. Tous droits réservés.</footer>
 
-  <footer>
-    <p>&copy; 2025 XM Trading Investment</p>
-  </footer>
+<!-- Notifications dynamiques -->
+<div class="notification" id="notif"></div>
 
-  <script>
-    const form = document.getElementById('registration-form');
-    form.addEventListener('submit', () => {
-      localStorage.setItem('xm_nom', form.nom.value);
-      localStorage.setItem('xm_prenom', form.prenom.value);
-      localStorage.setItem('xm_montant', form.montant.value);
-      localStorage.setItem('xm_devise', form.devise.value);
-    });
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const codes = {
+      "Bénin":"+229","Sénégal":"+221","Côte d'Ivoire":"+225",
+      "Mali":"+223","Guinée":"+224","Cameroun":"+237","Congo":"+242",
+      "RDC":"+243","Tchad":"+235","Haïti":"+509","Madagascar":"+261"
+    };
+    const paysEl = document.getElementById('pays'),
+          dialEl = document.getElementById('dial-code');
+    paysEl.addEventListener('change', () => dialEl.value = codes[paysEl.value] || '');
 
+    // Affichage page félicitations si succès
     const params = new URLSearchParams(window.location.search);
     if (params.get('success') === 'true') {
-      form.style.display = 'none';
+      document.getElementById('registration-form').style.display = 'none';
       document.getElementById('form-title').style.display = 'none';
-      const nom = localStorage.getItem('xm_nom') || '';
-      const prenom = localStorage.getItem('xm_prenom') || '';
-      const montant = localStorage.getItem('xm_montant') || '';
-      const devise = localStorage.getItem('xm_devise') || '';
-      document.getElementById('thx-nom').innerText = prenom + ' ' + nom;
-      document.getElementById('thx-montant').innerText = montant;
-      document.getElementById('thx-devise').innerText = devise;
+
+      const sexe = localStorage.getItem('sexe') || 'Monsieur';
+      const civilite = (sexe === 'Femme') ? 'Madame' : 'Monsieur';
+      document.getElementById('thx-civilite').innerText = civilite;
+      document.getElementById('thx-nom').innerText = localStorage.getItem('nom') || '';
+      document.getElementById('thx-montant').innerText = localStorage.getItem('montant') || '';
+      document.getElementById('thx-devise').innerText = localStorage.getItem('devise') || '';
+
       document.getElementById('thankyou').style.display = 'block';
     }
 
-    const codes = {"Cameroun":"+237","Sénégal":"+221","Côte d'Ivoire":"+225","RDC":"+243"};
-    document.getElementById('pays').addEventListener('change', e => {
-      document.getElementById('dial-code').value = codes[e.target.value] || '';
+    // Stockage des valeurs pour félicitations
+    document.getElementById('registration-form').addEventListener('submit', () => {
+      localStorage.setItem('sexe', document.getElementById('sexe').value);
+      localStorage.setItem('nom', document.getElementById('nom').value);
+      localStorage.setItem('montant', document.getElementById('montant').value);
+      localStorage.setItem('devise', document.getElementById('devise').value);
     });
 
-    const names = ["Amina","Koffi","Fatou","Ibrahim","Adjoa","Kwame","Ama","Moussa"];
-    const currencies = {"FCFA":500000,"USD":300,"EUR":300};
-    const notifBox = document.getElementById('notifications');
-
-    function randomNotif() {
-      const name = names[Math.floor(Math.random()*names.length)];
-      const devs = Object.keys(currencies);
-      const dev = devs[Math.floor(Math.random()*devs.length)];
-      const amount = Math.floor(currencies[dev] + Math.random()*currencies[dev]);
-      const div = document.createElement('div');
-      div.className = 'notif';
-      div.innerText = `${name} vient de retirer ${amount.toLocaleString()} ${dev}`;
-      notifBox.appendChild(div);
-      setTimeout(() => div.remove(), 5000);
+    // Notifications aléatoires
+    const noms = ["Abdoulaye", "Aïssatou", "Koffi", "Binta", "Moussa", "Fatou", "Junior", "Chantal", "Dieudonné", "Clarisse", "Blaise", "Naomie", "Eric", "Yao", "Ousmane", "Rolande", "Patrice", "Gisèle"];
+    const devises = ["FCFA", "USD", "EUR", "Franc Congo", "Gourde", "Ariary"];
+    function showNotif() {
+      const nom = noms.splice(Math.floor(Math.random() * noms.length),1)[0];
+      if(!nom) return; // Stop si plus de noms
+      const montant = Math.floor(Math.random() * 1000000) + 500000;
+      const devise = devises[Math.floor(Math.random() * devises.length)];
+      document.getElementById('notif').textContent = `🎉 ${nom} vient de retirer ${montant} ${devise}`;
     }
-    setInterval(randomNotif, 4000);
-  </script>
+    setInterval(showNotif, 7000);
+  });
+</script>
 </body>
 </html>
