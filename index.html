@@ -3,82 +3,174 @@
 <head>
   <meta charset="UTF-8">
   <title>Inscription XM Trading</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; max-width:480px; margin:2rem auto; padding:1rem; }
-    label { display:block; margin-top:1rem; }
-    input, select, button { width:100%; padding:.5rem; margin-top:.3rem; box-sizing:border-box; }
-    .phone-group { display:flex; }
-    .phone-group .dial-code { width:4.5rem; margin-right:.5rem; }
-    button { margin-top:1.5rem; background:#0077cc; color:#fff; border:none; cursor:pointer; }
-    button:hover { background:#005fa3; }
-    #thankyou { display:none; text-align:center; }
-    #thankyou h2 { color: #0077cc; }
+    /* Reset basique */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      max-width: 480px;
+      width: 100%;
+      padding: 2rem;
+      position: relative;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      color: #1e3c72;
+    }
+    form label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 500;
+      color: #333;
+    }
+    form input, form select, form button {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    form input:focus, form select:focus {
+      border-color: #1e3c72;
+      box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.2);
+      outline: none;
+    }
+    .phone-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .phone-group .dial-code {
+      flex: 0 0 4.5rem;
+      text-align: center;
+      background: #f0f0f0;
+    }
+    .phone-group input[type="tel"] {
+      flex: 1;
+    }
+    button {
+      background: #1e3c72;
+      color: #fff;
+      border: none;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background .3s;
+    }
+    button:hover {
+      background: #16325c;
+    }
+    /* Message de félicitations */
+    #thankyou {
+      display: none;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    #thankyou h2 {
+      color: #1e3c72;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+    #thankyou p {
+      color: #444;
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body>
-  <h2 id="form-title">Inscription XM Trading</h2>
+  <div class="card" id="form-card">
+    <h2 id="form-title">Inscription XM Trading</h2>
 
-  <form id="registration-form" name="inscription-xm" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-    <input type="hidden" name="form-name" value="inscription-xm">
-    <p style="display:none">
-      <label>Si vous êtes humain, ne remplissez pas <input name="bot-field"></label>
-    </p>
+    <form id="registration-form" name="inscription-xm" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="inscription-xm">
+      <p style="display:none">
+        <label>Si vous êtes humain, ne remplissez pas <input name="bot-field"></label>
+      </p>
 
-    <label for="nom">Nom :</label>
-    <input type="text" id="nom" name="nom" required>
+      <label for="nom">Nom</label>
+      <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
 
-    <label for="prenom">Prénom :</label>
-    <input type="text" id="prenom" name="prenom" required>
+      <label for="prenom">Prénom</label>
+      <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required>
 
-    <label for="pays">Pays :</label>
-    <select id="pays" name="pays" required>
-      <!-- ... options comme avant ... -->
-    </select>
+      <label for="pays">Pays</label>
+      <select id="pays" name="pays" required>
+        <option value="" disabled selected>Choisissez votre pays</option>
+        <optgroup label="Afrique de l'Ouest">
+          <option>Bénin</option><option>Burkina Faso</option><option>Cap-Vert</option><option>Côte d'Ivoire</option>
+          <option>Gambie</option><option>Ghana</option><option>Guinée</option><option>Guinée-Bissau</option>
+          <option>Libéria</option><option>Mali</option><option>Mauritanie</option><option>Niger</option>
+          <option>Nigéria</option><option>Sénégal</option><option>Sierra Leone</option><option>Togo</option>
+        </optgroup>
+        <optgroup label="Afrique centrale">
+          <option>Cameroun</option><option>Centrafrique</option><option>Tchad</option><option>Congo</option>
+          <option>RDC</option><option>Guinée équatoriale</option><option>Gabon</option><option>Sao Tomé-et-Principe</option>
+        </optgroup>
+        <optgroup label="Autres">
+          <option>Haïti</option><option>Madagascar</option>
+        </optgroup>
+      </select>
 
-    <label>Téléphone :</label>
-    <div class="phone-group">
-      <input type="text" id="dial-code" name="dial-code" class="dial-code" readonly placeholder="+xxx">
-      <input type="tel" id="phone" name="phone" required placeholder="Numéro">
+      <label>Téléphone</label>
+      <div class="phone-group">
+        <input type="text" id="dial-code" name="dial-code" class="dial-code" readonly placeholder="+xxx">
+        <input type="tel" id="phone" name="phone" placeholder="Numéro de téléphone" required>
+      </div>
+
+      <label for="montant">Montant à investir</label>
+      <input type="number" id="montant" name="montant" placeholder="Ex. 1000" step="0.01" required>
+
+      <label for="devise">Devise</label>
+      <select id="devise" name="devise" required>
+        <option value="" disabled selected>Choisissez une devise</option>
+        <option value="USD">$ Dollar</option>
+        <option value="XOF">FCFA</option>
+        <option value="XAF">Franc Congo</option>
+        <option value="HTG">Gourde</option>
+        <option value="MGA">Ariary</option>
+        <option value="EUR">€ Euro</option>
+      </select>
+
+      <label for="age">Âge</label>
+      <input type="number" id="age" name="age" placeholder="Votre âge" min="18" required>
+
+      <label for="metier">Métier</label>
+      <input type="text" id="metier" name="metier" placeholder="Votre profession" required>
+
+      <button type="submit">Valider l’inscription</button>
+    </form>
+
+    <div id="thankyou">
+      <h2>🎉 Félicitations, <span id="thx-nom"></span> !</h2>
+      <p>
+        Vous avez été enregistré avec succès chez XM Trading pour un investissement de
+        <strong><span id="thx-montant"></span> <span id="thx-devise"></span></strong>.<br>
+        Contactez votre administrateur sur WhatsApp pour effectuer votre dépôt.<br>
+        Une fois le dépôt effectué, le traitement prendra jusqu’à <strong>2 heures</strong> maximum.
+      </p>
     </div>
-
-    <label for="montant">Montant à investir :</label>
-    <input type="number" id="montant" name="montant" step="0.01" required>
-
-    <label for="devise">Devise :</label>
-    <select id="devise" name="devise" required>
-      <option value="USD">$ Dollar</option>
-      <option value="XOF">FCFA</option>
-      <option value="XAF">Franc Congo</option>
-      <option value="HTG">Gourde</option>
-      <option value="MGA">Ariary</option>
-      <option value="EUR">€ Euro</option>
-    </select>
-
-    <label for="age">Âge :</label>
-    <input type="number" id="age" name="age" min="18" required>
-
-    <label for="metier">Métier :</label>
-    <input type="text" id="metier" name="metier" required>
-
-    <button type="submit">Valider</button>
-  </form>
-
-  <!-- zone de remerciement masquée -->
-  <div id="thankyou">
-    <h2>Félicitations, <span id="thx-nom"></span> !</h2>
-    <p>
-      Vous avez été enregistré avec succès chez XM Trading pour un investissement de
-      <strong><span id="thx-montant"></span> <span id="thx-devise"></span></strong>.<br>
-      Contactez votre administrateur sur WhatsApp pour effectuer votre dépôt. <br>
-      Une fois le dépôt effectué, le traitement prendra jusqu’à <strong>2 heures</strong> maximum.
-    </p>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // 1) Autoremplissage indicatif
+      // Codes pays
       const codes = {
-        /* … tes codes pays … */
         "Bénin":"+229","Burkina Faso":"+226","Cap-Vert":"+238","Côte d'Ivoire":"+225",
         "Gambie":"+220","Ghana":"+233","Guinée":"+224","Guinée-Bissau":"+245",
         "Libéria":"+231","Mali":"+223","Mauritanie":"+222","Niger":"+227",
@@ -93,33 +185,27 @@
         dialEl.value = codes[paysEl.value] || '';
       });
 
-      // 2) Interception et envoi via fetch()
+      // Gestion du submit avec page de remerciement
       const form = document.getElementById('registration-form');
       form.addEventListener('submit', async e => {
         e.preventDefault();
-
-        // Construire FormData (inclut le hidden form-name et honeypot)
         const formData = new FormData(form);
-
         try {
-          // Envoi à Netlify Forms
           await fetch('/', { method: 'POST', body: formData });
+          // Récupérer et afficher les infos
+          const prenom  = formData.get('prenom');
+          const nom     = formData.get('nom');
+          const montant = parseFloat(formData.get('montant')).toLocaleString();
+          const devise  = formData.get('devise');
 
-          // Récupérer les valeurs pour le message
-          const prenom = formData.get('prenom');
-          const nom    = formData.get('nom');
-          const montant= formData.get('montant');
-          const devise = formData.get('devise');
-
-          // Afficher le message de remerciement
           document.getElementById('form-title').style.display = 'none';
           form.style.display = 'none';
           document.getElementById('thx-nom').innerText     = prenom + ' ' + nom;
-          document.getElementById('thx-montant').innerText = parseFloat(montant).toLocaleString();
+          document.getElementById('thx-montant').innerText = montant;
           document.getElementById('thx-devise').innerText  = devise;
           document.getElementById('thankyou').style.display = 'block';
         } catch (err) {
-          alert("Erreur lors de l'envoi, veuillez réessayer.");
+          alert("Une erreur est survenue, veuillez réessayer.");
           console.error(err);
         }
       });
