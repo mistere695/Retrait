@@ -8,49 +8,51 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Roboto', sans-serif;
+      background: #eef2f7;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      background: #f5f7fa;
     }
     header {
-      background: #fff;
+      background: #000;
+      color: #fff;
       padding: 1rem;
       text-align: center;
-      border-bottom: 2px solid #1e3c72;
     }
     header h1 {
-      color: #1e3c72;
       font-size: 2rem;
+      font-weight: 700;
     }
     main {
       flex: 1;
       display: flex;
-      flex-direction: column;
-      width: 100%;
+      justify-content: center;
+      align-items: start;
+      padding: 2rem 1rem;
     }
     .card {
-      background: #fff;
-      width: 100%;
-      flex: 1;
-      padding: 2rem 1rem;
       position: relative;
-    }
-    @media (min-width: 480px) {
-      .card { padding: 3rem; }
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 480px;
+      padding: 2rem;
+      margin: 1rem;
+      overflow: hidden;
     }
     h2 {
       text-align: center;
       margin-bottom: 1.5rem;
-      font-weight: 700;
       color: #1e3c72;
       font-size: 1.75rem;
+      font-weight: 700;
     }
     label {
       display: block;
       margin-top: 1rem;
+      color: #444;
       font-weight: 500;
-      color: #333;
     }
     input, select, button {
       width: 100%;
@@ -60,17 +62,24 @@
       border-radius: 6px;
       font-size: 1rem;
       transition: border-color .3s, box-shadow .3s;
+      background: #f9fbfd;
     }
     input:focus, select:focus {
       border-color: #1e3c72;
       box-shadow: 0 0 0 3px rgba(30,60,114,0.2);
       outline: none;
+      background: #fff;
     }
-    .phone-group { display: flex; gap: 0.5rem; margin-top: 0.3rem; }
+    .phone-group {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.3rem;
+    }
     .dial-code {
       flex: 0 0 5rem;
       text-align: center;
-      background: #f0f0f0;
+      background: #f0f4f8;
+      border-radius: 6px;
       line-height: 1.5;
     }
     .phone-group input[type="tel"] { flex: 1; }
@@ -79,31 +88,37 @@
       color: #fff;
       border: none;
       margin-top: 1.5rem;
-      cursor: pointer;
-      font-weight: 500;
       font-size: 1.1rem;
+      font-weight: 500;
+      cursor: pointer;
       transition: background .3s;
     }
     button:hover { background: #16325c; }
 
-    /* Notifications INSIDE .card, above form */
+    /* Notifications semi-transparent, superposées */
     #notifications {
-      width: 100%;
-      margin-bottom: 1.5rem;
+      position: absolute;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 2rem);
+      pointer-events: none;
+      z-index: 10;
     }
     .notif {
-      background: #1e3c72;
+      background: rgba(30,60,114,0.85);
       color: #fff;
-      padding: 1rem;
+      padding: 0.75rem 1rem;
       margin-bottom: 0.75rem;
       border-radius: 6px;
       font-size: 1.1rem;
       font-weight: 500;
+      backdrop-filter: blur(4px);
       animation: slideIn 0.4s, fadeOut 0.4s 4.6s forwards;
     }
     @keyframes slideIn {
-      from { transform: translateY(100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+      from { transform: translate(-50%, -100%); opacity: 0; }
+      to { transform: translate(-50%, 0); opacity: 1; }
     }
     @keyframes fadeOut {
       to { opacity: 0; height: 0; margin: 0; padding: 0; }
@@ -112,43 +127,42 @@
     /* Félicitations */
     #thankyou {
       display: none;
-      text-align: center;
-      padding: 2rem 1rem;
-      background: #fff;
-      border: 2px solid #1e3c72;
+      background: #1e3c72;
+      color: #fff;
       border-radius: 12px;
-      margin: 2rem 1rem;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      margin-top: 1rem;
     }
     #thankyou h2 {
-      color: #1e3c72;
-      margin-bottom: 1rem;
       font-size: 2rem;
+      margin-bottom: 1rem;
     }
     #thankyou p {
-      color: #444;
-      line-height: 1.5;
       font-size: 1.1rem;
+      line-height: 1.5;
     }
     #thankyou .cta {
       display: inline-block;
       margin-top: 1.5rem;
       padding: 0.75rem 1.5rem;
-      background: #1e3c72;
-      color: #fff;
+      background: #fff;
+      color: #1e3c72;
       font-weight: 700;
       border-radius: 6px;
       text-decoration: none;
       transition: background .3s;
     }
-    #thankyou .cta:hover { background: #16325c; }
+    #thankyou .cta:hover { background: #f0f0f0; }
 
     footer {
-      background: #fff;
-      padding: 1rem;
+      background: #000;
+      color: #aaa;
       text-align: center;
-      border-top: 2px solid #1e3c72;
+      padding: 1rem;
       font-size: 0.9rem;
-      color: #666;
+      border-top: 1px solid #333;
     }
   </style>
 </head>
@@ -159,7 +173,7 @@
 
   <main>
     <div class="card">
-      <!-- Notifications ici -->
+      <!-- Notifications -->
       <div id="notifications"></div>
 
       <h2 id="form-title">Inscription</h2>
@@ -220,16 +234,16 @@
 
         <button type="submit">Valider l’inscription</button>
       </form>
-    </div>
 
-    <!-- Félicitations -->
-    <div id="thankyou">
-      <h2>🎉 Félicitations, <span id="thx-nom"></span> !</h2>
-      <p>
-        Vous avez été enregistré avec succès chez XM Trading pour un investissement de
-        <strong><span id="thx-montant"></span> <span id="thx-devise"></span></strong>.<br>
-      </p>
-      <a href="https://wa.me/VOTRE_NUMERO" class="cta">Contactez votre administrateur sur WhatsApp</a>
+      <!-- Félicitations -->
+      <div id="thankyou">
+        <h2>🎉 Félicitations, <span id="thx-nom"></span> !</h2>
+        <p>
+          Vous avez été enregistré avec succès chez XM Trading pour un investissement de
+          <strong><span id="thx-montant"></span> <span id="thx-devise"></span></strong>.
+        </p>
+        <a href="https://wa.me/VOTRE_NUMERO" class="cta">Contactez votre administrateur</a>
+      </div>
     </div>
   </main>
 
@@ -239,7 +253,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // auto-indicatif
+      // Auto-indicatif
       const codes = {
         "Bénin":"+229","Burkina Faso":"+226","Cap-Vert":"+238","Côte d'Ivoire":"+225",
         "Gambie":"+220","Ghana":"+233","Guinée":"+224","Guinée-Bissau":"+245",
@@ -253,7 +267,7 @@
         document.getElementById('dial-code').value = codes[e.target.value]||'';
       });
 
-      // stockage pour thankyou
+      // Stockage local pour message de remerciement
       const form = document.getElementById('registration-form');
       form.addEventListener('submit', () => {
         localStorage.setItem('xm_nom', form.nom.value);
@@ -262,22 +276,23 @@
         localStorage.setItem('xm_devise', form.devise.value);
       });
 
-      // affichage thankyou
+      // Affichage du message de félicitations après redirection
       const params = new URLSearchParams(window.location.search);
       if (params.get('success') === 'true') {
         form.style.display = 'none';
         document.getElementById('form-title').style.display = 'none';
-        const pren = localStorage.getItem('xm_prenom')||'';
-        const nom  = localStorage.getItem('xm_nom')||'';
-        const mon  = localStorage.getItem('xm_montant')||'';
-        const dev  = localStorage.getItem('xm_devise')||'';
+        document.getElementById('notifications').style.display = 'none';
+        const pren = localStorage.getItem('xm_prenom') || '';
+        const nom  = localStorage.getItem('xm_nom')    || '';
+        const mon  = localStorage.getItem('xm_montant')|| '';
+        const dev  = localStorage.getItem('xm_devise') || '';
         document.getElementById('thx-nom').innerText     = pren + ' ' + nom;
-        document.getElementById('thx-montant').innerText = mon;
+        document.getElementById('thx-montant').innerText = new Intl.NumberFormat().format(mon);
         document.getElementById('thx-devise').innerText  = dev;
         document.getElementById('thankyou').style.display = 'block';
       }
 
-      // notifications sans répétition
+      // Notifications sans répétition
       const namesMaster = [
         'Amina','Koffi','Fatou','Cheikh','Ibrahim','Adjoa','Kwame','Ama',
         'Moussa','Zuri','Babacar','Chipo','Lamine','Ngozi','Yao','Zainab',
@@ -314,7 +329,7 @@
         setTimeout(()=> div.remove(), 6000);
       }
 
-      for (let j=0; j<3; j++) setTimeout(randomNotif, j*1000);
+      for (let j = 0; j < 3; j++) setTimeout(randomNotif, j * 1000);
       setInterval(randomNotif, 4000);
     });
   </script>
