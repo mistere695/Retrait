@@ -6,84 +6,160 @@
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
       font-family: 'Roboto', sans-serif;
       background: linear-gradient(135deg, #1e3c72, #2a5298);
-      min-height: 100vh;
+    }
+
+    body {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
+      padding: 0;
     }
+
+    /* Conteneur card responsive */
     .card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      max-width: 480px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
       width: 100%;
-      padding: 2rem;
+      max-width: 480px;
+      height: auto;
+      padding: 2.5rem;
       position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.8s ease-out;
     }
+
+    /* Titres */
     h2 {
       text-align: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       font-weight: 700;
       color: #1e3c72;
+      font-size: 1.8rem;
+      letter-spacing: 0.5px;
     }
+
+    /* Labels */
     label {
       display: block;
-      margin-top: 1rem;
+      margin-top: 1.2rem;
       font-weight: 500;
       color: #333;
+      font-size: 0.95rem;
     }
+
+    /* Champs de saisie */
     input, select, button {
       width: 100%;
-      padding: 0.75rem 1rem;
+      padding: 0.85rem 1rem;
       margin-top: 0.3rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
       font-size: 1rem;
-      transition: border-color .3s, box-shadow .3s;
+      transition: all 0.3s ease;
     }
+
     input:focus, select:focus {
       border-color: #1e3c72;
-      box-shadow: 0 0 0 3px rgba(30,60,114,0.2);
+      box-shadow: 0 0 0 4px rgba(30,60,114,0.15);
       outline: none;
     }
+
+    /* Groupe téléphone */
     .phone-group {
       display: flex;
       gap: 0.5rem;
     }
+
     .dial-code {
-      flex: 0 0 4.5rem;
+      flex: 0 0 5rem;
       text-align: center;
-      background: #f0f0f0;
+      background: #f5f5f5;
+      border-right: none;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
     }
-    .phone-group input[type="tel"] { flex: 1; }
+
+    .phone-group input[type="tel"] {
+      flex: 1;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    /* Bouton */
     button {
-      background: #1e3c72;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
       color: #fff;
       border: none;
-      margin-top: 1.5rem;
+      margin-top: 1.8rem;
       cursor: pointer;
-      font-weight: 500;
-      transition: background .3s;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 8px 20px rgba(30,60,114,0.3);
     }
-    button:hover { background: #16325c; }
+
+    button:hover {
+      background: linear-gradient(135deg, #16325c, #1e3c72);
+      transform: translateY(-2px);
+    }
 
     /* Félicitations */
     #thankyou {
       display: none;
       text-align: center;
       padding: 2rem 1rem;
+      animation: fadeIn 0.6s ease-out;
     }
+
     #thankyou h2 {
       color: #1e3c72;
       margin-bottom: 1rem;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
     }
-    #thankyou p { color: #444; line-height: 1.4; }
+
+    #thankyou p {
+      color: #444;
+      line-height: 1.5;
+      font-size: 1rem;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Adaptation mobile plein écran */
+    @media (max-width: 600px) {
+      html, body {
+        padding: 0;
+      }
+      .card {
+        border-radius: 0;
+        height: 100%;
+        max-width: none;
+        padding: 2rem 1.5rem;
+        box-shadow: none;
+      }
+      h2 {
+        font-size: 1.6rem;
+      }
+      button {
+        font-size: 0.95rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -196,9 +272,7 @@
         // masquer form
         document.getElementById('registration-form').style.display = 'none';
         document.getElementById('form-title').style.display = 'none';
-        // remplir message
-        // on peut extraire via localStorage ou query params, mais Netlify ne renvoie pas les champs
-        // pour simplifier, on met un message générique :
+        // remplir message (générique)
         document.getElementById('thx-nom').innerText = '';
         document.getElementById('thx-montant').innerText = '';
         document.getElementById('thx-devise').innerText = '';
